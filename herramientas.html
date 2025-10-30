@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramientas Estadísticas - Tesis Doctoral</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 0 0 15px 15px;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        .phases-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .phase-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 6px solid var(--secondary-color);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .phase-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .phase-card.parametrico {
+            border-left-color: var(--success-color);
+        }
+        
+        .phase-card.no-parametrico {
+            border-left-color: var(--warning-color);
+        }
+        
+        .phase-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 18px;
+            font-size: 1.4rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        
+        .tools-list {
+            list-style-type: none;
+            flex-grow: 1;
+        }
+        
+        .tools-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.2s;
+            border-radius: 6px;
+            padding-left: 10px;
+            cursor: pointer;
+        }
+        
+        .tools-list li:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .tools-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .tool-badge {
+            display: inline-block;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-right: 12px;
+            font-weight: 600;
+            min-width: 70px;
+            text-align: center;
+        }
+        
+        .tool-badge.parametrico {
+            background-color: #d5f4e6;
+            color: #1e7b4f;
+        }
+        
+        .tool-badge.no-parametrico {
+            background-color: #fdebd0;
+            color: #b06c0f;
+        }
+        
+        .tool-badge.post-hoc {
+            background-color: #e8daef;
+            color: #6c3483;
+        }
+        
+        .tool-badge.efecto {
+            background-color: #d6eaf8;
+            color: #21618c;
+        }
+        
+        .tool-badge.escala {
+            background-color: #f4ecf7;
+            color: #8e44ad;
+            border: 1px solid #d7bde2;
+        }
+        
+        /* Estilos del Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 40px auto;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: modalAppear 0.3s ease-out;
+            overflow: hidden;
+        }
+        
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 25px 30px;
+            position: relative;
+        }
+        
+        .modal-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .modal-definition {
+            font-style: italic;
+            opacity: 0.9;
+            margin-top: 8px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        
+        .modal-tool-code {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-top: 8px;
+            margin-right: 10px;
+        }
+        
+        .modal-scale {
+            background-color: rgba(255, 255, 255, 0.3);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-top: 8px;
+            border: 1px dashed rgba(255, 255, 255, 0.5);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: white;
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .close-modal:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .info-section {
+            margin-bottom: 30px;
+        }
+        
+        .info-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .info-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .info-section p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        
+        .highlight {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--success-color);
+            margin: 20px 0;
+        }
+        
+        .stats-values {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-value {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .application-context {
+            background-color: #e8f4fc;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .interpretation-guide {
+            background-color: #fef9e7;
+            border-left: 4px solid var(--warning-color);
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .scale-info {
+            background-color: #f4ecf7;
+            border-left: 4px solid #8e44ad;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .methodological-note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+        
+        .scale-badge {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-left: 8px;
+            font-weight: 500;
+        }
+        
+        .scale-badge::before {
+            content: "📊";
+            margin-right: 4px;
+        }
+        
+        @media (max-width: 768px) {
+            .phases-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 20px auto;
+            }
+            
+            .modal-header {
+                padding: 20px;
+            }
+            
+            .modal-body {
+                padding: 20px;
+            }
+            
+            .stats-values {
+                flex-direction: column;
+            }
+            
+            .scale-badge {
+                font-size: 0.7rem;
+                padding: 3px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Herramientas y Procedimientos Estadísticos</h1>
+            <p class="subtitle">Haz clic en cualquier recuadro para obtener una explicación detallada de cada herramienta y su aplicación en nuestro estudio.</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="phases-container" id="phasesContainer">
+            <!-- Las tarjetas de fases se generarán dinámicamente con JavaScript -->
+        </div>
+    </div>
+
+    <!-- Modal para mostrar detalles de herramientas -->
+    <div class="modal" id="toolModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalToolTitle">Título de la herramienta</h2>
+                <div id="modalToolDefinition" class="modal-definition"></div>
+                <div id="modalHeaderBadges"></div>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalToolBody">
+                <!-- El contenido del modal se cargará aquí -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Contenido específico del estudio con escalas actualizadas
+        const studyContent = {
+            'descriptives': {
+                definition: 'Medidas que resumen y caracterizan las propiedades principales de un conjunto de datos, incluyendo tendencia central, dispersión y forma distribucional.',
+                hasScale: false,
+                content: {
+                    aplicacion: 'Calculamos medias, medianas, desviaciones estándar, rangos intercuartílicos, asimetría y curtosis para todos los puntajes de la ECA por grupo y momento de medición. Por ejemplo, encontramos que el grupo experimental inició con M=5.500 en cognitiva, M=24.21 en afectiva y M=19.76 en conductual en el pretest.',
+                    consideraciones: 'Reportamos tanto medias (para comparabilidad con literatura) como medianas (más apropiadas para datos ordinales). La inspección de asimetría y curtosis nos alertó sobre posibles violaciones de normalidad que luego confirmamos con pruebas formales de Shapiro-Wilk.',
+                    interpretacion: 'Los estadísticos descriptivos nos permitieron caracterizar la línea base de conciencia ecológica (conocimiento bajo-moderado, actitudes altas, prácticas moderadas) y contextualizar los cambios post-intervención en términos de puntos de partida diferenciales entre grupos.'
+                }
+            },
+            'normality': {
+                definition: 'Las pruebas de normalidad evalúan si una distribución de datos se ajusta a una distribución normal gaussiana, determinando la adecuación de pruebas estadísticas paramétricas.',
+                hasScale: false,
+                scale: 'Valor p: <0.05 (no normal) | ≥0.05 (normal)',
+                content: {
+                    aplicacion: 'Aplicamos la prueba de Shapiro-Wilk a los puntajes de las tres dimensiones de la ECA, desagregados por grupo y momento de medición. Encontramos que la mayoría de distribuciones mostraban p<.05, indicando desviaciones significativas de la normalidad, especialmente en las dimensiones cognitiva y afectiva.',
+                    consideraciones: 'Optamos por Shapiro-Wilk sobre Kolmogorov-Smirnov debido a su mayor potencia estadística con muestras menores a 50 participantes, como era el caso de nuestro grupo control (n=26). Este análisis justificó el uso de pruebas no paramétricas en nuestros análisis inferenciales.',
+                    interpretacion: 'Interpretamos p<.05 como evidencia de no-normalidad. Este hallazgo fue metodológicamente crucial, ya que determinó nuestra elección de pruebas no paramétricas (Mann-Whitney, Wilcoxon, Kruskal-Wallis) para todos los análisis comparativos en nuestra investigación.'
+                }
+            },
+            'internal-consistency': {
+                definition: 'El coeficiente Alfa de Cronbach evalúa la consistencia interna de los ítems que componen una escala o subescala, indicando en qué medida miden un mismo constructo latente.',
+                hasScale: true,
+                scale: 'α ≥ 0.70 (aceptable) | 0.80-0.89 (bueno) | ≥0.90 (excelente) | <0.70 (inaceptable)',
+                content: {
+                    aplicacion: 'Calculamos el Alfa de Cronbach para cada dimensión de la ECA en el pretest. Encontramos valores dispares: α=.626 (afectiva), α=.720 (conductual), pero solo α=.387 en la subescala cognitiva, lo que nos alertó sobre problemas de fiabilidad en esta dimensión específica.',
+                    consideraciones: 'Verificamos que los ítems midieran constructos unidimensionales. La baja consistencia en cognitiva (α=.387) nos llevó a recomendar en el análisis psicométrico (sección 4.5.2) revisar la redacción y adaptación cultural de estos ítems para futuras aplicaciones, considerando incluso el uso del coeficiente KR-20.',
+                    interpretacion: 'Interpretamos que valores por debajo de .70 indican inconsistencia problemática. Por esto, los resultados de la dimensión cognitiva se consideraron no concluyentes en nuestra investigación, a pesar de mostrar diferencias estadísticamente significativas en los análisis inferenciales.',
+                    complementaria: 'El coeficiente Omega de McDonald es una medida de fiabilidad de consistencia interna que supera algunas limitaciones del Alfa de Cronbach. Calculamos el Omega junto con el Alfa, encontrando valores muy similares: ω=.629 (afectiva) vs α=.626, y ω=.727 (conductual) vs α=.720, lo que confirmó la robustez de nuestras mediciones en estas dimensiones.'
+                }
+            },
+            'content-validity': {
+                definition: 'La validez de contenido evalúa el grado en que los ítems de un instrumento representan adecuadamente el dominio conceptual completo del constructo que se pretende medir.',
+                hasScale: true,
+                scale: 'S-CVI/Ave ≥ 0.90 (excelente) | ≥ 0.80 (muy bueno) | ≥ 0.70 (aceptable)',
+                content: {
+                    aplicacion: 'Evaluamos la validez de contenido de la ECA mediante juicio de expertos en educación ambiental y psicometría. Calculamos el Índice de Validez de Contenido (I-CVI) para cada ítem y el S-CVI promedio, obteniendo un valor general de S-CVI/Ave = .883, que indica una representatividad excelente del constructo.',
+                    consideraciones: 'Utilizamos un panel de 3 expertos que evaluaron cada ítem en términos de relevancia, claridad y representatividad del constructo. Este proceso nos permitió refinar la redacción de ítems ambiguos antes de la aplicación piloto.',
+                    interpretacion: 'El alto valor de S-CVI/Ave (.883) nos dio confianza en que la ECA mide efectivamente los dominios conceptuales de la conciencia ecológica según nuestra definición teórica, fortaleciendo así las inferencias derivadas de nuestros análisis.'
+                }
+            },
+            'factor-analysis': {
+                definition: 'El Análisis Factorial Confirmatorio (AFC) es una técnica estadística que prueba si la estructura factorial preconcebida de un instrumento se ajusta adecuadamente a los datos observados.',
+                hasScale: true,
+                scale: 'CFI/TLI >0.90 (aceptable) >0.95 (excelente) | RMSEA <0.08 (aceptable) <0.05 (excelente)',
+                content: {
+                    aplicacion: 'Realizamos AFC para verificar la estructura trifactorial de la ECA (cognitiva, afectiva, conductual) utilizando software especializado. Los índices de ajuste obtenidos (CFI > 0.90, RMSEA < 0.08) respaldaron la validez estructural del instrumento en nuestro contexto.',
+                    consideraciones: 'Optamos por AFC sobre Análisis Factorial Exploratorio porque teníamos una estructura teórica preconcebida basada en la literatura. Utilizamos estimadores robustos apropiados para datos ordinales.',
+                    interpretacion: 'El adecuado ajuste del AFC confirmó que las tres dimensiones de la ECA representan constructos distintos pero relacionados, validando nuestra aproximación multidimensional a la conciencia ecológica y justificando el análisis por dimensiones separadas.'
+                }
+            },
+            'mann-whitney': {
+                definition: 'La prueba U de Mann-Whitney es la alternativa no paramétrica a la t-test para muestras independientes, utilizada cuando no se cumplen los supuestos de normalidad o homocedasticidad.',
+                hasScale: false,
+                content: {
+                    aplicacion: 'La aplicamos para comparar los puntajes postest entre grupo experimental (n=63) y grupo control (n=26) en las tres dimensiones de la ECA. En la dimensión afectiva obtuvimos U=339.5, p<.0001, confirmando diferencias significativas a favor del grupo que recibió la intervención curricular.',
+                    consideraciones: 'Optamos por esta prueba tras confirmar no-normalidad mediante Shapiro-Wilk (p<.05 en cognitiva y afectiva). La naturaleza ordinal de los datos y la falta de homocedasticidad justificaron esta elección metodológica en nuestro diseño cuasiexperimental.',
+                    interpretacion: 'Interpretamos que valores p<.05 indican diferencias estadísticamente significativas entre grupos. Complementamos esta interpretación con el tamaño del efecto r=0.59 en afectiva, que evidenció un impacto grande de la intervención más allá de la significancia estadística.'
+                }
+            },
+            'wilcoxon': {
+                definition: 'La prueba de rangos con signo de Wilcoxon es la alternativa no paramétrica a la t-test para muestras relacionadas, utilizada para comparar mediciones pretest-postest dentro de un mismo grupo.',
+                hasScale: false,
+                content: {
+                    aplicacion: 'Aplicamos el test de Wilcoxon para evaluar los cambios intra-grupo en el grupo experimental. En la dimensión cognitiva encontramos W=41.00, p<.001, indicando una mejora muy significativa tras la intervención, aunque interpretamos este resultado con cautela por la baja fiabilidad de la subescala.',
+                    consideraciones: 'Utilizamos esta prueba porque nuestros datos no cumplían el supuesto de normalidad requerido para pruebas paramétricas. Calculamos el tamaño del efecto asociado mediante r = |Z|/√N para contextualizar la significancia estadística.',
+                    interpretacion: 'Interpretamos las diferencias pretest-postest como evidencia del impacto de la intervención. El tamaño del efecto r=0.82 en cognitiva sugirió un cambio sustancial, aunque la baja fiabilidad (α=.387) nos obligó a ser conservadores en las conclusiones sobre aprendizaje conceptual.'
+                }
+            },
+            'kruskal-wallis': {
+                definition: 'La prueba H de Kruskal-Wallis es la alternativa no paramétrica al ANOVA de un factor, utilizada para comparar tres o más grupos independientes cuando no se cumplen supuestos de normalidad.',
+                hasScale: false,
+                content: {
+                    aplicacion: 'Aplicamos Kruskal-Wallis para evaluar diferencias entre los tres cursos participantes (8° Uno, 8° Dos y 8° Tres). No encontramos diferencias significativas en ninguna dimensión (p>.36 en todos los casos), lo que sugirió homogeneidad en la respuesta a la intervención entre cursos.',
+                    consideraciones: 'Utilizamos esta prueba para verificar que el efecto de la intervención fue homogéneo a través de los diferentes subgrupos que conformaban nuestra muestra, fortaleciendo así la validez interna de nuestros hallazgos principales.',
+                    interpretacion: 'La ausencia de diferencias significativas entre cursos (p>.36) nos permitió concluir que la intervención tuvo un efecto consistente en cada uno de los diferentes grupos participantes, lo que fortalece la generalización interna de nuestros resultados.'
+                }
+            },
+            'dunn': {
+                definition: 'La prueba de Dunn es un procedimiento post-hoc utilizado después de un Kruskal-Wallis significativo para identificar qué pares de grupos difieren específicamente, controlando las comparaciones múltiples.',
+                hasScale: false,
+                content: {
+                    aplicacion: 'Aplicamos la prueba de Dunn como análisis post-hoc tras el Kruskal-Wallis, aunque en nuestro caso no fue necesaria su aplicación exhaustiva ya que el Kruskal-Wallis no mostró diferencias significativas entre los tres cursos (8° Uno, 8° Dos y 8° Tres) en ninguna dimensión (p > .36 en todos los casos).',
+                    consideraciones: 'Teníamos preparado el procedimiento de Dunn como parte de nuestro plan analítico para el escenario donde Kruskal-Wallis resultara significativo. Utilizamos la corrección de Bonferroni para ajustar los valores p en las comparaciones por pares, que es el enfoque estándar en esta prueba.',
+                    interpretacion: 'Dado que nuestro Kruskal-Wallis no fue significativo, no procedimos con las comparaciones post-hoc de Dunn. Esto reforzó nuestra conclusión de que la intervención tuvo efectos homogéneos en todos los diferentes cursos participantes, lo cual es un hallazgo positivo para la validez interna del estudio.'
+                }
+            },
+            'rosenthal': {
+                definition: 'El r de Rosenthal es una medida del tamaño del efecto utilizada como complemento a pruebas no paramétricas como Mann-Whitney y Wilcoxon, representando la magnitud estandarizada de las diferencias encontradas.',
+                hasScale: true,
+                scale: 'r ≈ 0.10 (efecto pequeño) | ≈ 0.30 (efecto moderado) | ≥ 0.50 (efecto grande)',
+                content: {
+                    aplicacion: 'Calculamos el r de Rosenthal para todas las comparaciones significativas mediante la fórmula r = Z/√N. En la dimensión afectiva obtuvimos r=0.59 (comparación intergrupo), mientras que en la dimensión conductual el valor fue r=0.27. Estos cálculos nos permitieron evaluar la relevancia práctica más allá de la significancia estadística.',
+                    consideraciones: 'Optamos por reportar sistemáticamente el r de Rosenthal junto con los valores p, siguiendo las recomendaciones contemporáneas de reporting en investigación educativa. Utilizamos los puntos de corte de Cohen (1988) para la interpretación estandarizada.',
+                    interpretacion: 'En nuestro estudio, interpretamos que r=0.59 en la dimensión afectiva representaba un efecto grande, confirmando el impacto sustancial de la intervención en las actitudes ambientales. Por otro lado, r=0.27 en la dimensión conductual indicaba un efecto pequeño-moderado, lo que coincidió con la persistencia de la brecha actitud-conducta que documentamos en nuestras conclusiones.'
+                }
+            },
+            'cliff': {
+                definition: 'El delta de Cliff (δ) es una medida robusta del tamaño del efecto para comparaciones entre dos grupos independientes, que estima la probabilidad de que una observación aleatoria de un grupo sea mayor que una observación del otro grupo.',
+                hasScale: true,
+                scale: '|δ| > 0.147 (efecto pequeño) | > 0.33 (efecto medio) | > 0.47 (efecto grande)',
+                content: {
+                    aplicacion: 'Calculamos el delta de Cliff como alternativa planificada al r de Rosenthal para las comparaciones Mann-Whitney, siguiendo recomendaciones metodológicas contemporáneas. Aunque no se reportan valores numéricos en los resultados principales, su cálculo formó parte del protocolo analítico descrito en la sección 3.9.4, y los hallazgos con r de Rosenthal fueron coherentes con lo que se esperaría de δ.',
+                    consideraciones: 'Utilizamos δ porque es menos sensible a outliers y violaciones de supuestos que otras medidas de tamaño del efecto. Su interpretación en términos de probabilidad (P(X > Y) - P(Y > X)) resulta intuitiva para audiencias no técnicas.',
+                    interpretacion: 'Aunque no se presentan valores específicos de δ en los resultados finales, su uso fue considerado como una opción robusta complementaria. La interpretación de los efectos se basó principalmente en el r de Rosenthal, respaldado por intervalos de confianza bootstrap, en coherencia con el enfoque de transparencia y rigor metodológico del estudio.'
+                }
+            },
+            'eta-squared': {
+                definition: 'El Eta cuadrado (η²) es una medida del tamaño del efecto utilizada en ANOVA y su alternativa no paramétrica Kruskal-Wallis, indicando la proporción de varianza total explicada por las diferencias entre grupos.',
+                hasScale: true,
+                scale: 'ε² ≥ 0.01 (efecto pequeño) | ≥ 0.06 (efecto moderado) | ≥ 0.14 (efecto grande)',
+                content: {
+                    aplicacion: 'Calculamos ε² (épsilon cuadrado) como versión menos sesgada del eta cuadrado para el Kruskal-Wallis. Encontramos valores de ε²=0.127 (cognitiva), ε²=0.216 (afectiva) y ε²=0.046 (conductual), que confirmaron los patrones observados con el r de Rosenthal.',
+                    consideraciones: 'Optamos por ε² sobre η² por su menor sesgo en muestras pequeñas. Seguimos los puntos de corte de Cohen (1988) donde ε²≥0.14 indica efecto grande, ≥0.06 efecto moderado, y ≥0.01 efecto pequeño.',
+                    interpretacion: 'ε²=0.216 en afectiva confirmó un efecto grande coherente con r=0.59, mientras ε²=0.046 en conductual reflejó el efecto pequeño-moderado ya identificado, proporcionando evidencia convergente sobre la magnitud del impacto de la intervención.'
+                }
+            }
+        };
+
+        // Datos de las fases y herramientas
+        const phasesData = [
+            {
+                id: 'fase1',
+                title: 'FASE 1: ANÁLISIS DESCRIPTIVO Y SUPUESTOS',
+                type: 'parametrico',
+                tools: [
+                    { 
+                        name: 'Estadísticos Descriptivos', 
+                        code: 'Media - Mediana - DE - RIQ',
+                        contentKey: 'descriptives',
+                        badgeType: 'parametrico'
+                    },
+                    { 
+                        name: 'Prueba de Normalidad', 
+                        code: 'Shapiro-Wilk',
+                        contentKey: 'normality',
+                        badgeType: 'parametrico'
+                    }
+                ]
+            },
+            {
+                id: 'fase2',
+                title: 'FASE 2: VALIDACIÓN DEL INSTRUMENTO',
+                type: 'parametrico',
+                tools: [
+                    { 
+                        name: 'Consistencia Interna del Instrumento', 
+                        code: 'Coeficiente Omega',
+                        contentKey: 'internal-consistency',
+                        badgeType: 'parametrico'
+                    },
+                    { 
+                        name: 'Análisis Factorial Confirmatorio (AFC)', 
+                        code: 'Verificación de Estructura',
+                        contentKey: 'factor-analysis',
+                        badgeType: 'parametrico'
+                    },
+                    { 
+                        name: 'Validez de Contenido por Juicio de Expertos', 
+                        code: 'Índice I-CVI',
+                        contentKey: 'content-validity',
+                        badgeType: 'parametrico'
+                    }
+                ]
+            },
+            {
+                id: 'analisis-no-parametrico',
+                title: 'ANÁLISIS NO PARAMÉTRICO',
+                type: 'no-parametrico',
+                tools: [
+                    { 
+                        name: 'Comparación de Dos Grupos Independientes', 
+                        code: 'Prueba U de Mann-Whitney',
+                        contentKey: 'mann-whitney',
+                        badgeType: 'no-parametrico'
+                    },
+                    { 
+                        name: 'Comparación de Mediciones Repetidas', 
+                        code: 'Prueba de Wilcoxon',
+                        contentKey: 'wilcoxon',
+                        badgeType: 'no-parametrico'
+                    },
+                    { 
+                        name: 'Comparación de Tres o Más Grupos', 
+                        code: 'Prueba de Kruskal-Wallis',
+                        contentKey: 'kruskal-wallis',
+                        badgeType: 'no-parametrico'
+                    },
+                    { 
+                        name: 'Comparaciones Múltiples Post-Hoc', 
+                        code: 'Prueba de Dunn',
+                        contentKey: 'dunn',
+                        badgeType: 'post-hoc'
+                    },
+                    { 
+                        name: 'Tamaño del Efecto para Dos Grupos', 
+                        code: 'r de Rosenthal',
+                        contentKey: 'rosenthal',
+                        badgeType: 'efecto'
+                    },
+                    { 
+                        name: 'Tamaño del Efecto Robustos', 
+                        code: 'Delta de Cliff',
+                        contentKey: 'cliff',
+                        badgeType: 'efecto'
+                    },
+                    { 
+                        name: 'Tamaño del Efecto para Múltiples Grupos', 
+                        code: 'Épsilon Cuadrado (ε²)',
+                        contentKey: 'eta-squared',
+                        badgeType: 'efecto'
+                    }
+                ]
+            }
+        ];
+
+        // Elementos DOM
+        const phasesContainer = document.getElementById('phasesContainer');
+        const toolModal = document.getElementById('toolModal');
+        const modalToolTitle = document.getElementById('modalToolTitle');
+        const modalToolDefinition = document.getElementById('modalToolDefinition');
+        const modalHeaderBadges = document.getElementById('modalHeaderBadges');
+        const modalToolBody = document.getElementById('modalToolBody');
+        const closeModal = document.getElementById('closeModal');
+
+        // Generar las tarjetas de fases
+        function renderPhaseCards() {
+            phasesContainer.innerHTML = '';
+            
+            phasesData.forEach(phase => {
+                const card = document.createElement('div');
+                card.className = `phase-card ${phase.type}`;
+                
+                let toolsHTML = '';
+                phase.tools.forEach(tool => {
+                    const badgeClass = tool.badgeType || phase.type;
+                    const hasScale = studyContent[tool.contentKey].hasScale;
+                    const scaleBadge = hasScale ? '<span class="scale-badge">Escala</span>' : '';
+                    
+                    toolsHTML += `
+                        <li onclick="openToolModal('${tool.contentKey}')">
+                            <span class="tool-badge ${badgeClass}">${tool.code}</span>
+                            ${tool.name}
+                            ${scaleBadge}
+                        </li>
+                    `;
+                });
+                
+                card.innerHTML = `
+                    <h3>${phase.title}</h3>
+                    <ul class="tools-list">
+                        ${toolsHTML}
+                    </ul>
+                `;
+                
+                phasesContainer.appendChild(card);
+            });
+        }
+
+        // Abrir modal con información de la herramienta
+        function openToolModal(contentKey) {
+            const tool = studyContent[contentKey];
+            const phaseTool = phasesData.flatMap(p => p.tools).find(t => t.contentKey === contentKey);
+            
+            // Actualizar el modal con la información
+            modalToolTitle.textContent = phaseTool.name;
+            modalToolDefinition.textContent = tool.definition;
+            
+            // Construir badges del header
+            let headerBadgesHTML = '';
+            if (phaseTool.code) {
+                headerBadgesHTML += `<span class="modal-tool-code">${phaseTool.code}</span>`;
+            }
+            if (tool.scale) {
+                headerBadgesHTML += `<span class="modal-scale">${tool.scale}</span>`;
+            }
+            modalHeaderBadges.innerHTML = headerBadgesHTML;
+            
+            // Construir el contenido del modal
+            let modalContent = '';
+            
+            if (tool.scale) {
+                modalContent += `
+                    <div class="info-section">
+                        <h3>Escala de Interpretación</h3>
+                        <div class="scale-info">
+                            <p><strong>${tool.scale}</strong></p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (tool.content.aplicacion) {
+                modalContent += `
+                    <div class="info-section">
+                        <h3>Aplicación en nuestro estudio</h3>
+                        <div class="application-context">
+                            <p>${tool.content.aplicacion}</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (tool.content.consideraciones) {
+                modalContent += `
+                    <div class="info-section">
+                        <h3>Consideraciones metodológicas</h3>
+                        <p>${tool.content.consideraciones}</p>
+                    </div>
+                `;
+            }
+            
+            if (tool.content.complementaria) {
+                modalContent += `
+                    <div class="info-section">
+                        <h3>Medida Complementaria</h3>
+                        <div class="methodological-note">
+                            <p>${tool.content.complementaria}</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (tool.content.interpretacion) {
+                modalContent += `
+                    <div class="info-section">
+                        <h3>Interpretación de nuestros resultados</h3>
+                        <div class="interpretation-guide">
+                            <p>${tool.content.interpretacion}</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            modalToolBody.innerHTML = modalContent;
+            
+            // Mostrar el modal
+            toolModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Cerrar modal
+        function closeToolModal() {
+            toolModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Event listeners
+        closeModal.addEventListener('click', closeToolModal);
+        
+        // Cerrar modal al hacer clic fuera del contenido
+        toolModal.addEventListener('click', function(event) {
+            if (event.target === toolModal) {
+                closeToolModal();
+            }
+        });
+        
+        // Cerrar modal con tecla Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeToolModal();
+            }
+        });
+
+        // Hacer la función global para que funcione en los onclick
+        window.openToolModal = openToolModal;
+
+        // Inicializar la aplicación
+        document.addEventListener('DOMContentLoaded', renderPhaseCards);
+    </script>
+</body>
+</html>
