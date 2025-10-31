@@ -447,6 +447,41 @@
             white-space: nowrap;
             border: 0;
         }
+        .formula-container {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-left: 4px solid var(--secondary-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .formula {
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .formula-variables {
+            text-align: left;
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.6;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .variable {
+            font-family: 'Courier New', monospace;
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
         
         @media (max-width: 768px) {
             .phases-container {
@@ -641,7 +676,18 @@
                 hasScale: true,
                 scale: '|δ| > 0.147 (efecto pequeño) | > 0.33 (efecto medio) | > 0.47 (efecto grande)',
                 content: {
-                    aplicacion: 'Calculamos el delta de Cliff como alternativa planificada al r de Rosenthal para las comparaciones Mann-Whitney, siguiendo recomendaciones metodológicas contemporáneas. Aunque no se reportan valores numéricos en los resultados principales, su cálculo formó parte del protocolo analítico descrito en la sección 3.9.4, y los hallazgos con r de Rosenthal fueron coherentes con lo que se esperaría de δ.',
+                    aplicacion: `Calculamos el delta de Cliff como alternativa planificada al r de Rosenthal para las comparaciones Mann-Whitney. La fórmula conceptual es:
+
+                    <div class="formula-container">
+                        <div class="formula">δ = P(X > Y) - P(Y > X)</div>
+                        <div class="formula-variables">
+                            donde:<br>
+                            <span class="variable">P(X > Y)</span> = probabilidad de que un valor del grupo X sea mayor que uno del grupo Y<br>
+                            <span class="variable">P(Y > X)</span> = probabilidad de que un valor del grupo Y sea mayor que uno del grupo X
+                        </div>
+                    </div>
+
+                    Aunque no se reportan valores numéricos en los resultados principales, su cálculo formó parte del protocolo analítico descrito en la sección 3.9.4, y los hallazgos con r de Rosenthal fueron coherentes con lo que se esperaría de δ.`,
                     consideraciones: 'Utilizamos δ porque es menos sensible a outliers y violaciones de supuestos que otras medidas de tamaño del efecto. Su interpretación en términos de probabilidad (P(X > Y) - P(Y > X)) resulta intuitiva para audiencias no técnicas.',
                     interpretacion: 'Aunque no se presentan valores específicos de δ en los resultados finales, su uso fue considerado como una opción robusta complementaria. La interpretación de los efectos se basó principalmente en el r de Rosenthal, respaldado por intervalos de confianza bootstrap, en coherencia con el enfoque de transparencia y rigor metodológico del estudio.'
                 }
@@ -652,7 +698,21 @@
                 scale: 'ε² ≥ 0.01 (efecto pequeño) | ≥ 0.06 (efecto moderado) | ≥ 0.14 (efecto grande)',
                 content: {
                     aplicacion: 'Calculamos ε² (épsilon cuadrado) como versión menos sesgada del eta cuadrado para el Kruskal-Wallis. Encontramos valores de ε²=0.127 (cognitiva), ε²=0.216 (afectiva) y ε²=0.046 (conductual), que confirmaron los patrones observados con el r de Rosenthal.',
-                    consideraciones: 'Optamos por ε² sobre η² por su menor sesgo en muestras pequeñas. Seguimos los puntos de corte de Cohen (1988) donde ε²≥0.14 indica efecto grande, ≥0.06 efecto moderado, y ≥0.01 efecto pequeño.',
+                    consideraciones: `Una fórmula comúnmente usada para calcular η² en Kruskal-Wallis es:
+
+                    <div class="formula-container">
+                        <div class="formula">η² = (H - k + 1) / (n - k)</div>
+                        <div class="formula-variables">
+                            donde:<br>
+                            <span class="variable">H</span> = estadístico de Kruskal-Wallis<br>
+                            <span class="variable">k</span> = número de grupos<br>
+                            <span class="variable">n</span> = tamaño total de la muestra
+                        </div>
+                    </div>
+
+                    η² varía entre 0 y 1, donde valores cercanos a 0 indican un tamaño de efecto pequeño y valores cercanos a 1 un tamaño de efecto grande.
+                    
+                    Optamos por ε² sobre η² por su menor sesgo en muestras pequeñas. Seguimos los puntos de corte de Cohen (1988) donde ε²≥0.14 indica efecto grande, ≥0.06 efecto moderado, y ≥0.01 efecto pequeño.`,
                     interpretacion: 'ε²=0.216 en afectiva confirmó un efecto grande coherente con r=0.59, mientras ε²=0.046 en conductual reflejó el efecto pequeño-moderado ya identificado, proporcionando evidencia convergente sobre la magnitud del impacto de la intervención.'
                 }
             }
