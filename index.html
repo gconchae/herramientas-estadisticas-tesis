@@ -56,6 +56,35 @@
             line-height: 1.5;
         }
         
+        .search-container {
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        #toolSearch {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        #toolSearch:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+        }
+        
         .phases-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -107,14 +136,20 @@
             border-bottom: 1px solid #f0f0f0;
             display: flex;
             align-items: center;
-            transition: background-color 0.2s;
+            transition: all 0.2s ease;
             border-radius: 6px;
             padding-left: 10px;
             cursor: pointer;
+            position: relative;
         }
         
         .tools-list li:hover {
             background-color: #f8f9fa;
+            transform: translateX(5px);
+        }
+        
+        .tools-list li:active {
+            transform: scale(0.98);
         }
         
         .tools-list li:last-child {
@@ -357,6 +392,62 @@
             margin-right: 4px;
         }
         
+        .modal-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover:not(:disabled) {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .modal-loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: var(--secondary-color);
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+            display: none;
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
         @media (max-width: 768px) {
             .phases-container {
                 grid-template-columns: 1fr;
@@ -387,6 +478,15 @@
                 font-size: 0.7rem;
                 padding: 3px 8px;
             }
+            
+            .modal-navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nav-btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -399,9 +499,23 @@
     </header>
     
     <div class="container">
-        <div class="phases-container" id="phasesContainer">
-            <!-- Las tarjetas de fases se generarán dinámicamente con JavaScript -->
-        </div>
+        <main>
+            <h2 id="phases-heading" class="sr-only">Fases del Análisis Estadístico</h2>
+            
+            <div class="search-container">
+                <input type="text" id="toolSearch" placeholder="Buscar herramientas estadísticas...">
+                <span class="search-icon">🔍</span>
+            </div>
+            
+            <div class="no-results" id="noResults">
+                <h3>No se encontraron herramientas</h3>
+                <p>Intenta con otros términos de búsqueda</p>
+            </div>
+            
+            <div class="phases-container" id="phasesContainer">
+                <!-- Las tarjetas de fases se generarán dinámicamente con JavaScript -->
+            </div>
+        </main>
     </div>
 
     <!-- Modal para mostrar detalles de herramientas -->
@@ -411,12 +525,16 @@
                 <h2 id="modalToolTitle">Título de la herramienta</h2>
                 <div id="modalToolDefinition" class="modal-definition"></div>
                 <div id="modalHeaderBadges"></div>
-                <button class="close-modal" id="closeModal">&times;</button>
+                <button class="close-modal" id="closeModal" aria-label="Cerrar ventana">&times;</button>
             </div>
             <div class="modal-body" id="modalToolBody">
                 <!-- El contenido del modal se cargará aquí -->
             </div>
         </div>
+    </div>
+
+    <div class="modal-loading" id="modalLoading">
+        <p>Cargando información...</p>
     </div>
 
     <script>
@@ -637,6 +755,11 @@
             }
         ];
 
+        // Variables globales
+        let currentToolIndex = 0;
+        let allTools = [];
+        let filteredTools = [];
+
         // Elementos DOM
         const phasesContainer = document.getElementById('phasesContainer');
         const toolModal = document.getElementById('toolModal');
@@ -645,6 +768,9 @@
         const modalHeaderBadges = document.getElementById('modalHeaderBadges');
         const modalToolBody = document.getElementById('modalToolBody');
         const closeModal = document.getElementById('closeModal');
+        const toolSearch = document.getElementById('toolSearch');
+        const noResults = document.getElementById('noResults');
+        const modalLoading = document.getElementById('modalLoading');
 
         // Generar las tarjetas de fases
         function renderPhaseCards() {
@@ -661,7 +787,7 @@
                     const scaleBadge = hasScale ? '<span class="scale-badge">Escala</span>' : '';
                     
                     toolsHTML += `
-                        <li onclick="openToolModal('${tool.contentKey}')">
+                        <li onclick="openToolModal('${tool.contentKey}')" data-searchable="${tool.name.toLowerCase()} ${tool.code.toLowerCase()}">
                             <span class="tool-badge ${badgeClass}">${tool.code}</span>
                             ${tool.name}
                             ${scaleBadge}
@@ -678,94 +804,209 @@
                 
                 phasesContainer.appendChild(card);
             });
+            
+            // Preparar lista de todas las herramientas para navegación
+            allTools = phasesData.flatMap(phase => phase.tools);
+            filteredTools = [...allTools];
         }
 
         // Abrir modal con información de la herramienta
         function openToolModal(contentKey) {
-            const tool = studyContent[contentKey];
-            const phaseTool = phasesData.flatMap(p => p.tools).find(t => t.contentKey === contentKey);
-            
-            // Actualizar el modal con la información
-            modalToolTitle.textContent = phaseTool.name;
-            modalToolDefinition.textContent = tool.definition;
-            
-            // Construir badges del header
-            let headerBadgesHTML = '';
-            if (phaseTool.code) {
-                headerBadgesHTML += `<span class="modal-tool-code">${phaseTool.code}</span>`;
-            }
-            if (tool.scale) {
-                headerBadgesHTML += `<span class="modal-scale">${tool.scale}</span>`;
-            }
-            modalHeaderBadges.innerHTML = headerBadgesHTML;
-            
-            // Construir el contenido del modal
-            let modalContent = '';
-            
-            if (tool.scale) {
-                modalContent += `
-                    <div class="info-section">
-                        <h3>Escala de Interpretación</h3>
-                        <div class="scale-info">
-                            <p><strong>${tool.scale}</strong></p>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            if (tool.content.aplicacion) {
-                modalContent += `
-                    <div class="info-section">
-                        <h3>Aplicación en nuestro estudio</h3>
-                        <div class="application-context">
-                            <p>${tool.content.aplicacion}</p>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            if (tool.content.consideraciones) {
-                modalContent += `
-                    <div class="info-section">
-                        <h3>Consideraciones metodológicas</h3>
-                        <p>${tool.content.consideraciones}</p>
-                    </div>
-                `;
-            }
-            
-            if (tool.content.complementaria) {
-                modalContent += `
-                    <div class="info-section">
-                        <h3>Medida Complementaria</h3>
-                        <div class="methodological-note">
-                            <p>${tool.content.complementaria}</p>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            if (tool.content.interpretacion) {
-                modalContent += `
-                    <div class="info-section">
-                        <h3>Interpretación de nuestros resultados</h3>
-                        <div class="interpretation-guide">
-                            <p>${tool.content.interpretacion}</p>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            modalToolBody.innerHTML = modalContent;
-            
-            // Mostrar el modal
+            // Mostrar indicador de carga
+            modalLoading.style.display = 'block';
             toolModal.style.display = 'block';
             document.body.style.overflow = 'hidden';
+            
+            // Simular carga asíncrona para mejor UX
+            setTimeout(() => {
+                const tool = studyContent[contentKey];
+                const phaseTool = allTools.find(t => t.contentKey === contentKey);
+                
+                // Actualizar el modal con la información
+                modalToolTitle.textContent = phaseTool.name;
+                modalToolDefinition.textContent = tool.definition;
+                
+                // Actualizar índice actual para navegación
+                currentToolIndex = filteredTools.findIndex(t => t.contentKey === contentKey);
+                
+                // Construir badges del header
+                let headerBadgesHTML = '';
+                if (phaseTool.code) {
+                    headerBadgesHTML += `<span class="modal-tool-code">${phaseTool.code}</span>`;
+                }
+                if (tool.scale) {
+                    headerBadgesHTML += `<span class="modal-scale">${tool.scale}</span>`;
+                }
+                modalHeaderBadges.innerHTML = headerBadgesHTML;
+                
+                // Construir el contenido del modal
+                let modalContent = '';
+                
+                if (tool.scale) {
+                    modalContent += `
+                        <div class="info-section">
+                            <h3>Escala de Interpretación</h3>
+                            <div class="scale-info">
+                                <p><strong>${tool.scale}</strong></p>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (tool.content.aplicacion) {
+                    modalContent += `
+                        <div class="info-section">
+                            <h3>Aplicación en nuestro estudio</h3>
+                            <div class="application-context">
+                                <p>${tool.content.aplicacion}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (tool.content.consideraciones) {
+                    modalContent += `
+                        <div class="info-section">
+                            <h3>Consideraciones metodológicas</h3>
+                            <p>${tool.content.consideraciones}</p>
+                        </div>
+                    `;
+                }
+                
+                if (tool.content.complementaria) {
+                    modalContent += `
+                        <div class="info-section">
+                            <h3>Medida Complementaria</h3>
+                            <div class="methodological-note">
+                                <p>${tool.content.complementaria}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (tool.content.interpretacion) {
+                    modalContent += `
+                        <div class="info-section">
+                            <h3>Interpretación de nuestros resultados</h3>
+                            <div class="interpretation-guide">
+                                <p>${tool.content.interpretacion}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // Agregar navegación entre herramientas
+                modalContent += `
+                    <div class="modal-navigation">
+                        <button id="prevTool" class="nav-btn" ${currentToolIndex <= 0 ? 'disabled' : ''}>← Anterior</button>
+                        <button id="nextTool" class="nav-btn" ${currentToolIndex >= filteredTools.length - 1 ? 'disabled' : ''}>Siguiente →</button>
+                    </div>
+                `;
+                
+                modalToolBody.innerHTML = modalContent;
+                
+                // Agregar event listeners para navegación
+                document.getElementById('prevTool').addEventListener('click', navigateToPrevTool);
+                document.getElementById('nextTool').addEventListener('click', navigateToNextTool);
+                
+                // Ocultar indicador de carga
+                modalLoading.style.display = 'none';
+                
+                // Enfocar el botón de cerrar para mejor accesibilidad
+                closeModal.focus();
+            }, 300);
+        }
+
+        // Navegación entre herramientas
+        function navigateToPrevTool() {
+            if (currentToolIndex > 0) {
+                openToolModal(filteredTools[currentToolIndex - 1].contentKey);
+            }
+        }
+
+        function navigateToNextTool() {
+            if (currentToolIndex < filteredTools.length - 1) {
+                openToolModal(filteredTools[currentToolIndex + 1].contentKey);
+            }
         }
 
         // Cerrar modal
         function closeToolModal() {
             toolModal.style.display = 'none';
             document.body.style.overflow = 'auto';
+        }
+
+        // Función de búsqueda
+        function filterTools(searchTerm) {
+            const allToolElements = document.querySelectorAll('.tools-list li');
+            let hasResults = false;
+            
+            allToolElements.forEach(tool => {
+                const toolText = tool.getAttribute('data-searchable');
+                if (toolText.includes(searchTerm.toLowerCase())) {
+                    tool.style.display = 'flex';
+                    hasResults = true;
+                } else {
+                    tool.style.display = 'none';
+                }
+            });
+            
+            // Actualizar filteredTools para navegación
+            filteredTools = allTools.filter(tool => {
+                const searchableText = `${tool.name.toLowerCase()} ${tool.code.toLowerCase()}`;
+                return searchableText.includes(searchTerm.toLowerCase());
+            });
+            
+            // Mostrar/ocultar mensaje de no resultados
+            if (hasResults || searchTerm === '') {
+                noResults.style.display = 'none';
+                phasesContainer.style.display = 'grid';
+            } else {
+                noResults.style.display = 'block';
+                phasesContainer.style.display = 'none';
+            }
+        }
+
+        // Navegación por teclado mejorada
+        function initKeyboardNavigation() {
+            document.addEventListener('keydown', function(event) {
+                // Cerrar modal con Escape
+                if (event.key === 'Escape' && toolModal.style.display === 'block') {
+                    closeToolModal();
+                }
+                
+                // Navegación con teclas en modal
+                if (toolModal.style.display === 'block') {
+                    if (event.key === 'ArrowLeft') {
+                        navigateToPrevTool();
+                    } else if (event.key === 'ArrowRight') {
+                        navigateToNextTool();
+                    }
+                    
+                    // Mantener foco dentro del modal
+                    if (event.key === 'Tab') {
+                        const focusableElements = toolModal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                        if (focusableElements.length === 0) return;
+                        
+                        const firstElement = focusableElements[0];
+                        const lastElement = focusableElements[focusableElements.length - 1];
+                        
+                        if (event.shiftKey && document.activeElement === firstElement) {
+                            lastElement.focus();
+                            event.preventDefault();
+                        } else if (!event.shiftKey && document.activeElement === lastElement) {
+                            firstElement.focus();
+                            event.preventDefault();
+                        }
+                    }
+                }
+            });
+        }
+
+        // Pre-cargar contenido (simulación)
+        function preloadModalContent() {
+            console.log('Contenido de modales listo para cargar');
+            // En una implementación real, aquí podrías cargar contenido adicional
         }
 
         // Event listeners
@@ -778,18 +1019,20 @@
             }
         });
         
-        // Cerrar modal con tecla Escape
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeToolModal();
-            }
+        // Búsqueda en tiempo real
+        toolSearch.addEventListener('input', function(event) {
+            filterTools(event.target.value);
         });
-
+        
         // Hacer la función global para que funcione en los onclick
         window.openToolModal = openToolModal;
 
         // Inicializar la aplicación
-        document.addEventListener('DOMContentLoaded', renderPhaseCards);
+        document.addEventListener('DOMContentLoaded', function() {
+            renderPhaseCards();
+            initKeyboardNavigation();
+            preloadModalContent();
+        });
     </script>
 </body>
 </html>
