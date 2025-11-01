@@ -391,7 +391,29 @@
             content: "📊";
             margin-right: 4px;
         }
-        
+
+        .methodology-path {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0 15px;
+        }
+        .methodology-path h4 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        .methodology-path p, .methodology-path ol, .methodology-path ul {
+            margin-bottom: 10px;
+        }
+        .methodology-path ol, .methodology-path ul {
+            padding-left: 20px;
+        }
+        .methodology-path li {
+            margin-bottom: 8px;
+        }
+
         .modal-navigation {
             display: flex;
             justify-content: space-between;
@@ -573,7 +595,7 @@
     </div>
 
     <script>
-        // Contenido específico del estudio con escalas actualizadas
+        // Contenido específico del estudio con escalas y conexiones actualizadas
         const studyContent = {
             'descriptives': {
                 definition: 'Medidas que resumen y caracterizan las propiedades principales de un conjunto de datos, incluyendo tendencia central, dispersión y forma distribucional.',
@@ -631,7 +653,27 @@
                 content: {
                     aplicacion: 'La aplicamos para comparar los puntajes postest entre grupo experimental (n=63) y grupo control (n=26) en las tres dimensiones de la ECA. En la dimensión afectiva obtuvimos U=339.5, p<.0001, confirmando diferencias significativas a favor del grupo que recibió la intervención curricular.',
                     consideraciones: 'Optamos por esta prueba tras confirmar no-normalidad mediante Shapiro-Wilk (p<.05 en cognitiva y afectiva). La naturaleza ordinal de los datos y la falta de homocedasticidad justificaron esta elección metodológica en nuestro diseño cuasiexperimental.',
-                    interpretacion: 'Interpretamos que valores p<.05 indican diferencias estadísticamente significativas entre grupos. Complementamos esta interpretación con el tamaño del efecto r=0.59 en afectiva, que evidenció un impacto grande de la intervención más allá de la significancia estadística.'
+                    interpretacion: 'Interpretamos que valores p<.05 indican diferencias estadísticamente significativas entre grupos. Complementamos esta interpretación con el tamaño del efecto r=0.59 en afectiva, que evidenció un impacto grande de la intervención más allá de la significancia estadística.',
+                    conexiones: `
+                        <div class="methodology-path">
+                            <h4>Nuestra Ruta de Análisis</h4>
+                            <p>Para comparar los grupos (Experimental vs. Control), seguimos esta secuencia lógica:</p>
+                            <ol>
+                                <li>
+                                    <strong>Verificación de Supuestos:</strong> Primero, evaluamos si los datos seguían una distribución normal usando la 
+                                    <a href="#" onclick="event.preventDefault(); openToolModal('normality')">Prueba de Normalidad (Shapiro-Wilk)</a>.
+                                </li>
+                                <li>
+                                    <strong>Decisión Clave:</strong> Al encontrar que los datos no eran normales, optamos por esta prueba no paramétrica.
+                                </li>
+                                <li>
+                                    <strong>Análisis de Impacto:</strong> Tras encontrar una diferencia significativa, medimos su magnitud con el 
+                                    <a href="#" onclick="event.preventDefault(); openToolModal('rosenthal')">r de Rosenthal</a> y la alternativa robusta 
+                                    <a href="#" onclick="event.preventDefault(); openToolModal('cliff')">Delta de Cliff</a>.
+                                </li>
+                            </ol>
+                        </div>
+                    `
                 }
             },
             'wilcoxon': {
@@ -640,7 +682,26 @@
                 content: {
                     aplicacion: 'Aplicamos el test de Wilcoxon para evaluar los cambios intra-grupo en el grupo experimental. En la dimensión cognitiva encontramos W=41.00, p<.001, indicando una mejora muy significativa tras la intervención, aunque interpretamos este resultado con cautela por la baja fiabilidad de la subescala.',
                     consideraciones: 'Utilizamos esta prueba porque nuestros datos no cumplían el supuesto de normalidad requerido para pruebas paramétricas. Calculamos el tamaño del efecto asociado mediante r = |Z|/√N para contextualizar la significancia estadística.',
-                    interpretacion: 'Interpretamos las diferencias pretest-postest como evidencia del impacto de la intervención. El tamaño del efecto r=0.82 en cognitiva sugirió un cambio sustancial, aunque la baja fiabilidad (α=.387) nos obligó a ser conservadores en las conclusiones sobre aprendizaje conceptual.'
+                    interpretacion: 'Interpretamos las diferencias pretest-postest como evidencia del impacto de la intervención. El tamaño del efecto r=0.82 en cognitiva sugirió un cambio sustancial, aunque la baja fiabilidad (α=.387) nos obligó a ser conservadores en las conclusiones sobre aprendizaje conceptual.',
+                    conexiones: `
+                        <div class="methodology-path">
+                            <h4>Nuestra Ruta de Análisis</h4>
+                            <p>Para evaluar el cambio <em>dentro</em> del Grupo Experimental (Pretest vs. Postest), seguimos esta secuencia:</p>
+                            <ol>
+                                <li>
+                                    <strong>Verificación de Supuestos:</strong> Comprobamos la normalidad de los datos con la 
+                                    <a href="#" onclick="event.preventDefault(); openToolModal('normality')">Prueba de Shapiro-Wilk</a>.
+                                </li>
+                                <li>
+                                    <strong>Decisión Clave:</strong> Al no cumplirse el supuesto, se seleccionó esta prueba no paramétrica para muestras relacionadas.
+                                </li>
+                                <li>
+                                    <strong>Análisis de Impacto:</strong> Medimos la magnitud del cambio observado con el 
+                                    <a href="#" onclick="event.preventDefault(); openToolModal('rosenthal')">r de Rosenthal</a>.
+                                </li>
+                            </ol>
+                        </div>
+                    `
                 }
             },
             'kruskal-wallis': {
@@ -649,7 +710,30 @@
                 content: {
                     aplicacion: 'Aplicamos Kruskal-Wallis para evaluar diferencias entre los tres cursos participantes (8° Uno, 8° Dos y 8° Tres). No encontramos diferencias significativas en ninguna dimensión (p>.36 en todos los casos), lo que sugirió homogeneidad en la respuesta a la intervención entre cursos.',
                     consideraciones: 'Utilizamos esta prueba para verificar que el efecto de la intervención fue homogéneo a través de los diferentes subgrupos que conformaban nuestra muestra, fortaleciendo así la validez interna de nuestros hallazgos principales.',
-                    interpretacion: 'La ausencia de diferencias significativas entre cursos (p>.36) nos permitió concluir que la intervención tuvo un efecto consistente en cada uno de los diferentes grupos participantes, lo que fortalece la generalización interna de nuestros resultados.'
+                    interpretacion: 'La ausencia de diferencias significativas entre cursos (p>.36) nos permitió concluir que la intervención tuvo un efecto consistente en cada uno de los diferentes grupos participantes, lo que fortalece la generalización interna de nuestros resultados.',
+                    conexiones: `
+                        <div class="methodology-path">
+                            <h4>Nuestra Ruta de Análisis</h4>
+                            <p>Para comparar si existían diferencias en la conciencia ecológica entre los tres cursos participantes (Octavo Uno, Octavo Dos y Octavo Tres), seguimos esta secuencia:</p>
+                            <ol>
+                                <li>
+                                    <strong>Verificación de Supuestos:</strong> Comprobamos la normalidad de los datos con la 
+                                    <a href="#" onclick="event.preventDefault(); openToolModal('normality')">Prueba de Shapiro-Wilk</a>.
+                                </li>
+                                <li>
+                                    <strong>Decisión Clave:</strong> Al no cumplirse el supuesto de normalidad, se seleccionó esta prueba, que es la alternativa no paramétrica ideal para comparar tres o más grupos independientes.
+                                </li>
+                                <li>
+                                    <strong>Siguiente Paso (Condicional):</strong> Si hubiéramos encontrado diferencias significativas entre los cursos, habríamos necesitado la 
+                                    <a href="#" onclick="event.preventDefault(); openToolModal('dunn')">Prueba de Dunn</a> para identificar exactamente qué grupos diferían entre sí.
+                                </li>
+                                <li>
+                                    <strong>Análisis de Impacto:</strong> La magnitud del efecto para esta prueba se mide con el 
+                                    <a href="#" onclick="event.preventDefault(); openToolModal('eta-squared')">Épsilon Cuadrado (ε²)</a>.
+                                </li>
+                            </ol>
+                        </div>
+                    `
                 }
             },
             'dunn': {
@@ -658,7 +742,25 @@
                 content: {
                     aplicacion: 'Aplicamos la prueba de Dunn como análisis post-hoc tras el Kruskal-Wallis, aunque en nuestro caso no fue necesaria su aplicación exhaustiva ya que el Kruskal-Wallis no mostró diferencias significativas entre los tres cursos (8° Uno, 8° Dos y 8° Tres) en ninguna dimensión (p > .36 en todos los casos).',
                     consideraciones: 'Teníamos preparado el procedimiento de Dunn como parte de nuestro plan analítico para el escenario donde Kruskal-Wallis resultara significativo. Utilizamos la corrección de Bonferroni para ajustar los valores p en las comparaciones por pares, que es el enfoque estándar en esta prueba.',
-                    interpretacion: 'Dado que nuestro Kruskal-Wallis no fue significativo, no procedimos con las comparaciones post-hoc de Dunn. Esto reforzó nuestra conclusión de que la intervención tuvo efectos homogéneos en todos los diferentes cursos participantes, lo cual es un hallazgo positivo para la validez interna del estudio.'
+                    interpretacion: 'Dado que nuestro Kruskal-Wallis no fue significativo, no procedimos con las comparaciones post-hoc de Dunn. Esto reforzó nuestra conclusión de que la intervención tuvo efectos homogéneos en todos los diferentes cursos participantes, lo cual es un hallazgo positivo para la validez interna del estudio.',
+                    conexiones: `
+                        <div class="methodology-path">
+                            <h4>Nuestra Ruta de Análisis</h4>
+                            <p>Esta prueba funciona como un análisis complementario y solo se aplica bajo una condición específica:</p>
+                            <ol>
+                                <li>
+                                    <strong>Prueba Previa:</strong> Primero, se debe ejecutar una 
+                                    <a href="#" onclick="event.preventDefault(); openToolModal('kruskal-wallis')">Prueba de Kruskal-Wallis</a> para comparar tres o más grupos, como Octavo Uno, Octavo Dos y Octavo Tres.
+                                </li>
+                                <li>
+                                    <strong>Condición de Uso:</strong> La Prueba de Dunn solo se utiliza si el resultado de Kruskal-Wallis es <strong>estadísticamente significativo</strong> (generalmente, p < .05).
+                                </li>
+                                <li>
+                                    <strong>Nuestra Decisión:</strong> En nuestro estudio, la prueba de Kruskal-Wallis no encontró diferencias significativas entre los cursos. Por lo tanto, <strong>no fue necesario aplicar la Prueba de Dunn</strong>, pero se documenta como parte del plan analítico riguroso.
+                                </li>
+                            </ol>
+                        </div>
+                    `
                 }
             },
             'rosenthal': {
@@ -668,7 +770,18 @@
                 content: {
                     aplicacion: 'Calculamos el r de Rosenthal para todas las comparaciones significativas mediante la fórmula r = Z/√N. En la dimensión afectiva obtuvimos r=0.59 (comparación intergrupo), mientras que en la dimensión conductual el valor fue r=0.27. Estos cálculos nos permitieron evaluar la relevancia práctica más allá de la significancia estadística.',
                     consideraciones: 'Optamos por reportar sistemáticamente el r de Rosenthal junto con los valores p, siguiendo las recomendaciones contemporáneas de reporting en investigación educativa. Utilizamos los puntos de corte de Cohen (1988) para la interpretación estandarizada.',
-                    interpretacion: 'En nuestro estudio, interpretamos que r=0.59 en la dimensión afectiva representaba un efecto grande, confirmando el impacto sustancial de la intervención en las actitudes ambientales. Por otro lado, r=0.27 en la dimensión conductual indicaba un efecto pequeño-moderado, lo que coincidió con la persistencia de la brecha actitud-conducta que documentamos en nuestras conclusiones.'
+                    interpretacion: 'En nuestro estudio, interpretamos que r=0.59 en la dimensión afectiva representaba un efecto grande, confirmando el impacto sustancial de la intervención en las actitudes ambientales. Por otro lado, r=0.27 en la dimensión conductual indicaba un efecto pequeño-moderado, lo que coincidió con la persistencia de la brecha actitud-conducta que documentamos en nuestras conclusiones.',
+                    conexiones: `
+                        <div class="methodology-path">
+                            <h4>Nuestra Ruta de Análisis</h4>
+                            <p>El 'r de Rosenthal' no es una prueba principal, sino un indicador que nos dice <strong>qué tan grande e importante</strong> es un efecto. Lo usamos para complementar los resultados de:</p>
+                            <ul>
+                                <li>La <a href="#" onclick="event.preventDefault(); openToolModal('mann-whitney')">Prueba U de Mann-Whitney</a> (para comparar dos grupos independientes).</li>
+                                <li>La <a href="#" onclick="event.preventDefault(); openToolModal('wilcoxon')">Prueba de Wilcoxon</a> (para medir el cambio dentro de un grupo).</li>
+                            </ul>
+                            <p>Esto nos permite ir más allá del "sí o no" de la significancia estadística y entender la relevancia práctica de nuestros hallazgos.</p>
+                        </div>
+                    `
                 }
             },
             'cliff': {
@@ -713,7 +826,17 @@
                     η² varía entre 0 y 1, donde valores cercanos a 0 indican un tamaño de efecto pequeño y valores cercanos a 1 un tamaño de efecto grande.
                     
                     Optamos por ε² sobre η² por su menor sesgo en muestras pequeñas. Seguimos los puntos de corte de Cohen (1988) donde ε²≥0.14 indica efecto grande, ≥0.06 efecto moderado, y ≥0.01 efecto pequeño.`,
-                    interpretacion: 'ε²=0.216 en afectiva confirmó un efecto grande coherente con r=0.59, mientras ε²=0.046 en conductual reflejó el efecto pequeño-moderado ya identificado, proporcionando evidencia convergente sobre la magnitud del impacto de la intervención.'
+                    interpretacion: 'ε²=0.216 en afectiva confirmó un efecto grande coherente con r=0.59, mientras ε²=0.046 en conductual reflejó el efecto pequeño-moderado ya identificado, proporcionando evidencia convergente sobre la magnitud del impacto de la intervención.',
+                    conexiones: `
+                        <div class="methodology-path">
+                            <h4>Nuestra Ruta de Análisis</h4>
+                            <p>El 'Épsilon Cuadrado' (una versión mejorada del Eta Cuadrado) es la medida de tamaño del efecto específica que utilizamos para cuantificar la magnitud de las diferencias encontradas con la:</p>
+                            <ul>
+                                <li><a href="#" onclick="event.preventDefault(); openToolModal('kruskal-wallis')">Prueba de Kruskal-Wallis</a>.</li>
+                            </ul>
+                            <p>Nos indica qué proporción de la variabilidad en los puntajes se puede explicar por la pertenencia a uno de los diferentes cursos analizados.</p>
+                        </div>
+                    `
                 }
             }
         };
@@ -955,6 +1078,13 @@
                     `;
                 }
                 
+                // --- INICIO DE LA MODIFICACIÓN ---
+                // Añadir la sección de conexiones metodológicas si existe
+                if (tool.content.conexiones) {
+                    modalContent += tool.content.conexiones;
+                }
+                // --- FIN DE LA MODIFICACIÓN ---
+
                 // Agregar navegación entre herramientas
                 modalContent += `
                     <div class="modal-navigation">
