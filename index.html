@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Herramientas Estadísticas - Tesis Doctoral</title>
+    
+    <!-- SEO y Metaetiquetas para compartir -->
+    <meta name="description" content="Un manual interactivo del 'cómo' metodológico. Explica cada decisión y procedimiento estadístico que sustenta la validez de la tesis.">
+    <meta property="og:title" content="Herramientas Estadísticas - Tesis Doctoral">
+    <meta property="og:description" content="Un manual interactivo del 'cómo' metodológico. Explica cada decisión y procedimiento estadístico que sustenta la validez de la tesis.">
+    <meta property="og:type" content="website">
+
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -30,6 +37,10 @@
         .nav-container strong { color: var(--primary-color); margin-right: 20px; font-size: 1rem; }
         .main-nav a { color: var(--dark-color); text-decoration: none; padding: 10px 15px; border-radius: 6px; font-weight: 600; transition: all 0.2s ease; }
         .main-nav a:hover { background-color: var(--light-color); color: var(--secondary-color); }
+        .main-nav a.active {
+            color: var(--secondary-color);
+            background-color: #e8f4fc;
+        }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
         
@@ -94,7 +105,6 @@
         .application-context { background-color: #e8f4fc; border-left: 4px solid var(--secondary-color); padding: 15px; border-radius: 6px; margin: 15px 0; }
         .interpretation-guide { background-color: #fef9e7; border-left: 4px solid var(--warning-color); padding: 15px; border-radius: 6px; margin: 15px 0; }
         
-        /* Estilos para Guías Visuales (Rutas/Caminos) */
         .methodology-path, .instrument-path { background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 25px 0 15px; }
         .methodology-path { border-left: 4px solid var(--inferencial-color); }
         .instrument-path { border-left: 4px solid var(--fase2-color); }
@@ -133,7 +143,6 @@
         .accordion-content li { margin-bottom: 10px; }
         .accordion-content code { background-color: #e9ecef; padding: 3px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-weight: bold; }
         
-        /* --- Estilos para la Tabla de Magnitud --- */
         .magnitude-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         .magnitude-table th, .magnitude-table td { border: 1px solid #ddd; padding: 12px; text-align: center; }
         .magnitude-table th { background-color: #f8f9fa; color: var(--primary-color); }
@@ -158,13 +167,10 @@
     <nav class="main-nav">
         <div class="nav-container">
             <strong>Proyecto de Tesis:</strong>
-            <!-- REEMPLAZAR: URL a una página de visión general o al repositorio de GitHub -->
             <a href="https://gconchae.github.io/tesis-vision-general/" title="Sobre el Proyecto">Visión General</a>
-            
             <a href="https://gconchae.github.io/conceptos-y-hallazgos/" title="Explora la narrativa y los hallazgos">Conceptos y Hallazgos</a>
-            <a href="https://gconchae.github.io/herramientas-estadisticas-tesis/" title="Explora la metodología y estadística">Herramientas Estadísticas</a>
-            <!-- REEMPLAZAR: URL al PDF público de la tesis -->
-            <a href="#" target="_blank" title="Descargar la tesis completa en PDF">Ver la Tesis (PDF)</a>
+            <a href="https://gconchae.github.io/herramientas-estadisticas-tesis/" class="active" title="Explora la metodología y estadística">Herramientas Estadísticas</a>
+            <a href="https://gconchae.github.io/tesis-vision-general/tesis-doctoral.pdf" target="_blank" title="Descargar la tesis completa en PDF">Ver la Tesis (PDF)</a>
         </div>
     </nav>
 
@@ -194,7 +200,7 @@
             <div class="cta-banner">
                 <h2>¿Listo para ver los Resultados?</h2>
                 <p>Ahora que ha explorado el motor metodológico, le invitamos a descubrir los hallazgos, conceptos clave y la historia completa de la investigación.</p>
-                <a href="https://gconchae.github.io/conceptos-y-hallazgos/" class="cta-button" target="_blank">Explorar los Hallazgos</a>
+                <a href="https://gconchae.github.io/conceptos-y-hallazgos/" class="cta-button">Explorar los Hallazgos</a>
             </div>
         </main>
     </div>
