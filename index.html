@@ -10,6 +10,7 @@
             --secondary-color: #3498db;
             --light-color: #ecf0f1;
             --dark-color: #34495e;
+            --warning-color: #f39c12;
             
             /* Colores de las Fases */
             --fase1-color: #27ae60; /* Verde */
@@ -19,184 +20,59 @@
             --apendice-color: #c0392b; /* Rojo oscuro */
         }
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         
-        body {
-            background-color: #f5f7fa;
-            color: #333;
-            line-height: 1.6;
-        }
+        body { background-color: #f5f7fa; color: #333; line-height: 1.6; padding-top: 60px; }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
-            color: white;
-            padding: 30px 0;
-            text-align: center;
-            border-radius: 0 0 15px 15px;
-            margin-bottom: 30px;
-        }
-        
-        h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.5;
-        }
-        
-        .search-container {
-            margin: 20px 0 30px;
-            position: relative;
-        }
-        
-        #toolSearch {
-            width: 100%;
-            padding: 15px 20px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-        
-        #toolSearch:focus {
-            outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
-        }
-        
-        .search-icon {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #7f8c8d;
-        }
-        
-        .phases-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-        }
-        
-        .phase-card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            border-left: 6px solid var(--secondary-color);
-        }
-        
-        .phase-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
-        }
+        /* --- Barra de Navegación Unificada --- */
+        .main-nav { background-color: #fff; border-bottom: 2px solid var(--light-color); position: fixed; top: 0; left: 0; width: 100%; z-index: 1001; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; height: 60px; }
+        .nav-container strong { color: var(--primary-color); margin-right: 20px; font-size: 1rem; }
+        .main-nav a { color: var(--dark-color); text-decoration: none; padding: 10px 15px; border-radius: 6px; font-weight: 600; transition: all 0.2s ease; }
+        .main-nav a:hover { background-color: var(--light-color); color: var(--secondary-color); }
 
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        header { background: linear-gradient(135deg, var(--primary-color), var(--dark-color)); color: white; padding: 30px 0; text-align: center; border-radius: 0 0 15px 15px; margin-bottom: 30px; }
+        h1 { font-size: 2.2rem; margin-bottom: 10px; }
+        .subtitle { font-size: 1.2rem; opacity: 0.9; max-width: 800px; margin: 0 auto; line-height: 1.5; }
+        
+        .search-container { margin: 20px 0 30px; position: relative; }
+        #toolSearch { width: 100%; padding: 15px 20px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; transition: all 0.3s ease; }
+        #toolSearch:focus { outline: none; border-color: var(--secondary-color); box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2); }
+        .search-icon { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #7f8c8d; }
+        
+        .phases-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
+        .phase-card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); transition: all 0.3s ease; border-left: 6px solid var(--secondary-color); }
+        .phase-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12); }
         .phase-card.fase-1 { border-left-color: var(--fase1-color); }
         .phase-card.fase-2 { border-left-color: var(--fase2-color); }
         .phase-card.inferencial { border-left-color: var(--inferencial-color); }
         .phase-card.impacto { border-left-color: var(--impacto-color); }
-        .phase-card.apendice { 
-            border-left-color: var(--apendice-color);
-            grid-column: 1 / -1; /* Ocupa todo el ancho */
-        }
+        .phase-card.apendice { border-left-color: var(--apendice-color); grid-column: 1 / -1; }
+        .phase-card h3 { color: var(--primary-color); margin-bottom: 18px; font-size: 1.4rem; }
         
-        .phase-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 18px;
-            font-size: 1.4rem;
-        }
+        .tools-list { list-style-type: none; }
+        .tools-list li { padding: 12px 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; transition: background-color 0.2s ease; cursor: pointer; }
+        .tools-list li:hover { background-color: #f8f9fa; }
+        .tools-list li:last-child { border-bottom: none; }
+        .tool-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.85rem; margin-right: 15px; font-weight: 600; color: white; min-width: 90px; text-align: center; flex-shrink: 0; }
+        .tool-text-container { display: flex; flex-direction: column; }
+        .tool-text-container strong { font-size: 1rem; color: var(--dark-color); margin-bottom: 2px; }
+        .tool-text-container small { font-size: 0.85rem; color: #7f8c8d; }
+        .highlight { background-color: #fff3cd; color: #664d03; padding: 2px 0; border-radius: 3px; }
         
-        .tools-list {
-            list-style-type: none;
-        }
-        
-        .tools-list li {
-            padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
-            display: flex;
-            align-items: center;
-            transition: background-color 0.2s ease;
-            cursor: pointer;
-        }
-        
-        .tools-list li:hover {
-            background-color: #f8f9fa;
-        }
-        
-        .tools-list li:last-child {
-            border-bottom: none;
-        }
-
-        .tool-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            margin-right: 12px;
-            font-weight: 600;
-            color: white;
-            min-width: 90px;
-            text-align: center;
-        }
-
         .fase-1 .tool-badge { background-color: var(--fase1-color); }
         .phase-card.fase-2 .tool-badge { background-color: var(--fase2-color); }
         .phase-card.inferencial .tool-badge { background-color: var(--inferencial-color); }
         .phase-card.impacto .tool-badge { background-color: var(--impacto-color); }
         .phase-card.apendice .tool-badge { background-color: var(--apendice-color); }
         
-        .cta-banner {
-            background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
-            color: white;
-            text-align: center;
-            padding: 40px 20px;
-            border-radius: 15px;
-            margin-top: 40px;
-        }
-        .cta-banner h2 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-        .cta-banner p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 25px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .cta-button {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-        .cta-button:hover {
-            background-color: #2980b9;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
+        .cta-banner { background: linear-gradient(135deg, var(--dark-color), var(--primary-color)); color: white; text-align: center; padding: 40px 20px; border-radius: 15px; margin-top: 40px; }
+        .cta-banner h2 { font-size: 1.8rem; margin-bottom: 15px; }
+        .cta-banner p { font-size: 1.1rem; opacity: 0.9; margin-bottom: 25px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .cta-button { background-color: var(--secondary-color); color: white; padding: 12px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1rem; transition: all 0.3s ease; }
+        .cta-button:hover { background-color: #2980b9; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
         /* Estilos del Modal */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1000; overflow-y: auto; padding: 20px; }
@@ -213,20 +89,24 @@
         .info-section { margin-bottom: 30px; }
         .info-section:last-child { margin-bottom: 0; }
         .info-section h3 { color: var(--primary-color); margin-bottom: 15px; font-size: 1.3rem; padding-bottom: 8px; border-bottom: 2px solid #f0f0f0; }
-        .info-section p, .info-section ul { margin-bottom: 15px; line-height: 1.7; }
-        .info-section ul { padding-left: 20px; }
+        .info-section p, .info-section ul, .info-section ol { margin-bottom: 15px; line-height: 1.7; }
+        .info-section ul, .info-section ol { padding-left: 20px; }
         .application-context { background-color: #e8f4fc; border-left: 4px solid var(--secondary-color); padding: 15px; border-radius: 6px; margin: 15px 0; }
         .interpretation-guide { background-color: #fef9e7; border-left: 4px solid var(--warning-color); padding: 15px; border-radius: 6px; margin: 15px 0; }
-        .scale-info { background-color: #f4ecf7; border-left: 4px solid #8e44ad; padding: 15px; border-radius: 6px; margin: 15px 0; }
         
-        .methodology-path { background-color: #f8f9fa; border-left: 4px solid var(--impacto-color); padding: 20px; border-radius: 8px; margin: 25px 0 15px; }
-        .methodology-path h4 { color: var(--primary-color); margin-bottom: 20px; font-size: 1.2rem; }
+        /* Estilos para Guías Visuales (Rutas/Caminos) */
+        .methodology-path, .instrument-path { background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 25px 0 15px; }
+        .methodology-path { border-left: 4px solid var(--inferencial-color); }
+        .instrument-path { border-left: 4px solid var(--fase2-color); }
+        .methodology-path h4, .instrument-path h4 { color: var(--primary-color); margin-bottom: 20px; font-size: 1.2rem; }
         .path-steps { position: relative; }
         .path-steps::before { content: ''; position: absolute; left: 17px; top: 5px; bottom: 5px; width: 3px; background-color: #e0e0e0; z-index: 1; }
         .path-step { display: flex; align-items: flex-start; margin-bottom: 20px; position: relative; z-index: 2; }
         .path-step:last-child { margin-bottom: 0; }
         .step-number { flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; background-color: #bdc3c7; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; margin-right: 15px; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: all 0.3s ease; }
-        .path-step.current .step-number { background-color: var(--impacto-color); transform: scale(1.1); }
+        .path-step.current .step-number { transform: scale(1.1); }
+        .methodology-path .path-step.current .step-number { background-color: var(--inferencial-color); }
+        .instrument-path .path-step.current .step-number { background-color: var(--fase2-color); }
         .step-text { padding-top: 5px; }
         .step-text a { color: var(--secondary-color); text-decoration: none; font-weight: bold; border-bottom: 2px dashed #d6eaf8; transition: all 0.2s; }
         .step-text a:hover { background-color: #d6eaf8; border-bottom-style: solid; }
@@ -241,8 +121,7 @@
         .formula { font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 1.5rem; color: var(--primary-color); line-height: 1.8; }
         .formula-variables { text-align: left; font-size: 0.95rem; color: #555; max-width: 300px; margin: 15px auto 0; }
         .variable { font-family: 'Courier New', monospace; background: #e9ecef; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
-
-        /* Estilos del Acordeón */
+        
         .accordion-item { border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
         .accordion-header { background-color: #f8f9fa; width: 100%; border: none; text-align: left; padding: 15px 20px; font-size: 1.2rem; font-weight: 600; color: var(--primary-color); cursor: pointer; position: relative; transition: background-color 0.2s; }
         .accordion-header:hover { background-color: #e9ecef; }
@@ -250,9 +129,15 @@
         .accordion-header.active::after { transform: translateY(-50%) rotate(45deg); }
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease-out; background-color: white; padding: 0 20px; }
         .accordion-content h4 { color: var(--primary-color); margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem; }
-        .accordion-content ul { list-style-position: inside; padding-left: 10px; }
+        .accordion-content ul, .accordion-content ol { list-style-position: inside; padding-left: 10px; }
         .accordion-content li { margin-bottom: 10px; }
         .accordion-content code { background-color: #e9ecef; padding: 3px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-weight: bold; }
+        
+        /* --- Estilos para la Tabla de Magnitud --- */
+        .magnitude-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .magnitude-table th, .magnitude-table td { border: 1px solid #ddd; padding: 12px; text-align: center; }
+        .magnitude-table th { background-color: #f8f9fa; color: var(--primary-color); }
+        .magnitude-table td:first-child { font-weight: bold; text-align: left; }
 
         @media (max-width: 900px) {
             .phases-container { grid-template-columns: 1fr; }
@@ -264,10 +149,24 @@
             .modal-header, .modal-body { padding: 20px; }
             .modal-navigation { flex-direction: column; gap: 10px; }
             .nav-btn { width: 100%; }
+            .nav-container strong { display: none; }
+            .main-nav a { padding: 8px 10px; font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <strong>Proyecto de Tesis:</strong>
+            <!-- REEMPLAZAR: URL a una página de visión general o al repositorio de GitHub -->
+            <a href="#" title="Sobre el Proyecto">Visión General</a> 
+            <a href="https://gconchae.github.io/conceptos-y-hallazgos/" title="Explora la narrativa y los hallazgos">Conceptos y Hallazgos</a>
+            <a href="https://gconchae.github.io/herramientas-estadisticas-tesis/" title="Explora la metodología y estadística">Herramientas Estadísticas</a>
+            <!-- REEMPLAZAR: URL al PDF público de la tesis -->
+            <a href="#" target="_blank" title="Descargar la tesis completa en PDF">Ver la Tesis (PDF)</a>
+        </div>
+    </nav>
+
     <header>
         <div class="container">
             <h1>Herramientas y Procedimientos Estadísticos</h1>
@@ -318,7 +217,46 @@
                 definition: "Son las herramientas que usamos para 'tomar una foto' inicial de nuestros datos. Nos dicen dos cosas clave: un valor 'típico' (como el promedio) y qué tan 'dispersos' están los demás valores a su alrededor.",
                 content: {
                     aplicacion: `<strong>¿Cómo los usamos en el estudio?</strong> Para establecer nuestra <strong>línea base</strong>, usamos principalmente cuatro medidas:<ul><li><strong>Media (M):</strong> El promedio clásico de los puntajes.</li><li><strong>Desviación Estándar (DE):</strong> Nos dijo qué tan dispersos estaban los puntajes alrededor de la media.</li><li><strong>Mediana (Mdn):</strong> El puntaje que se encuentra justo en el medio de todos los demás.</li><li><strong>Rango Intercuartílico (RIQ):</strong> Nos mostró la dispersión del 50% central de los estudiantes, una medida más robusta.</li></ul>`,
-                    interpretacion: `<strong>¿Qué nos dijeron?</strong> Primero, revelaron el perfil inicial de los estudiantes: <strong>actitudes altas, pero conocimiento y prácticas moderadas</strong>, sugiriendo la 'brecha actitud-conducta'.<br><br>Pero lo más importante fue que, al analizar la dispersión, notamos que los datos <strong>no eran 'normales'</strong>. Esto hizo que la <strong>Mediana y el Rango Intercuartílico (RIQ)</strong> fueran nuestros indicadores más fiables y los protagonistas de nuestro análisis descriptivo. Incluimos la Media y la Desviación Estándar (DE) para poder comparar nuestros resultados con otros estudios, pero nuestra historia principal se basa en las medidas más robustas.`
+                    interpretacion: `<strong>¿Qué nos dijeron?</strong> Primero, revelaron el perfil inicial de los estudiantes: <strong>actitudes altas, pero conocimiento y prácticas moderadas</strong>, sugiriendo la 'brecha actitud-conducta'.<br><br>Pero lo más importante fue que, al analizar la dispersión, notamos que los datos <strong>no eran 'normales'</strong>. Esto hizo que la <strong>Mediana y el Rango Intercuartílico (RIQ)</strong> fueran nuestros indicadores más fiables y los protagonistas de nuestro análisis descriptivo.`,
+                    conexiones: `<div class="application-context"><p>¿Interesado en la matemática detrás de estos conceptos? <a href="#" onclick="openFormulaGuide('descriptivos')">Explora las fórmulas y procedimientos en nuestra guía</a>.</p></div>`
+                }
+            },
+            'sample_size': {
+                definition: "Este es el proceso de 'control de calidad' que hicimos antes de empezar para responder a una pregunta crucial: ¿cuántos estudiantes necesitamos para que nuestros resultados sean confiables?",
+                content: {
+                    the_main_question: `<strong>La Pregunta Principal: Potencia Estadística</strong><p>El objetivo más importante de nuestra tesis era detectar si la intervención tenía un efecto real. Usando un software especializado (G*Power), calculamos el <strong>tamaño mínimo de muestra</strong> necesario para tener una alta probabilidad (un 80%) de encontrar un efecto de tamaño medio si este existía.</p><div class="interpretation-guide" style="margin-top: 15px;"><strong>Panel de Control (Configuración):</strong><ul><li><strong>Tamaño del efecto esperado (f de Cohen):</strong> 0.25 (un efecto 'medio', una expectativa realista).</li><li><strong>Nivel de significancia (α):</strong> 0.05 (el estándar del 95% de confianza).</li><li><strong>Potencia estadística deseada (1-β):</strong> 0.80 (un 80% de probabilidad de detectar el efecto si existe).</li></ul></div><p style="margin-top: 15px;"><strong>El resultado:</strong> El software nos indicó que necesitábamos un mínimo de <strong>34 a 40 participantes</strong>.</p>`,
+                    interpretation: `<strong>¿Por qué esto es tan importante?</strong><p>Nuestra muestra final fue de <strong>n = 89 estudiantes</strong>. Al ser más del doble de lo requerido, tenemos una gran confianza en que nuestro estudio tuvo la <strong>potencia estadística suficiente</strong> para detectar los efectos reales de la intervención. Esto da una enorme solidez a nuestras conclusiones.</p>`,
+                }
+            },
+            'muestra_estudio': {
+                definition: "Una descripción de los participantes y una explicación transparente sobre la composición de los grupos, una característica clave de los diseños cuasiexperimentales en contextos reales.",
+                content: {
+                    composicion: `<h3>¿Quiénes Participaron?</h3><div class="application-context"><p>Nuestra muestra final válida consistió en <strong>89 estudiantes</strong> de octavo grado, distribuidos en dos grupos:</p><ul><li><strong>Grupo Experimental (GE):</strong> n = 63 estudiantes (recibieron la intervención).</li><li><strong>Grupo Control (GC):</strong> n = 26 estudiantes (continuaron con el currículo regular).</li></ul></div>`,
+                    explicacion_desbalance: `<h3>El Desbalance y los Grupos No Equivalentes</h3>
+                    <div class="interpretation-guide">
+                        <p>Como es común en la investigación educativa en entornos reales, trabajamos con <strong>grupos no equivalentes</strong>. Esto significa que los grupos Experimental y de Control no eran idénticos al inicio, y su diferencia de tamaño (63 vs. 26) se explica por dos factores:</p>
+                        <ol>
+                            <li>
+                                <strong>Muestreo con Grupos-Clase Naturales:</strong>
+                                <p>Para no alterar la dinámica escolar, usamos los cursos ya existentes. La matrícula inicial (la población accesible, N=146) ya presentaba un ligero desbalance:</p>
+                                <ul>
+                                    <li>8° Uno: 49 estudiantes</li>
+                                    <li>8° Dos: 46 estudiantes</li>
+                                    <li>8° Tres: 51 estudiantes</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Atrición Diferencial (Pérdida de Participantes):</strong>
+                                <p>Aplicamos criterios rigurosos de exclusión (ej. participación incompleta, falta de autorización de los padres) para asegurar la calidad de los datos. Este proceso llevó a una pérdida de participantes (<strong>atrición</strong>), que fue muy desigual:</p>
+                                <ul>
+                                    <li>El curso <strong>8° Tres</strong> tuvo la tasa de atrición más alta, perdiendo al <strong>63%</strong> de sus estudiantes.</li>
+                                    <li>En contraste, los otros dos cursos tuvieron tasas mucho menores (<strong>~33%</strong> y <strong>~20%</strong>).</li>
+                                </ul>
+                                <p><strong>Conclusión Clave:</strong> Fue esta <strong>atrición diferencial</strong>, y no el ligero desbalance inicial, la causa principal de la composición final de la muestra (n=89) y del riesgo de sesgo de selección.</p>
+                            </li>
+                        </ol>
+                    </div>`,
+                    implicaciones: `<div class="application-context"><p>Tener conciencia de este desbalance fue crucial y guió nuestras decisiones analíticas:</p><ul><li><strong>Justificó aún más el uso de pruebas no paramétricas:</strong> Pruebas como la <a href="#" onclick="event.preventDefault(); openToolModal('mann-whitney')">U de Mann-Whitney</a> son robustas y funcionan bien con grupos de tamaños desiguales y distribuciones no normales.</li><li><strong>Reforzó la importancia del análisis de potencia:</strong> Nuestro <a href="#" onclick="event.preventDefault(); openToolModal('sample_size')">cálculo de potencia a priori</a> demostró que nuestra muestra total (n=89) era más que suficiente para detectar efectos, incluso con este desbalance.</li></ul><p>En resumen, aunque el desbalance es una limitación del diseño cuasiexperimental, lo abordamos de frente con las herramientas estadísticas adecuadas para garantizar la validez de nuestras conclusiones.</p></div>`
                 }
             },
              'ordinal_data': {
@@ -329,40 +267,90 @@
                 }
             },
             'normality': {
-                definition: "Esta prueba actúa como un 'guardián' que examina nuestros datos para ver si se distribuyen de forma 'normal', es decir, si se parecen a la famosa 'curva de campana'.",
+                definition: "Esta prueba actúa como un 'inspector de calidad' que compara nuestros datos con un 'plano perfecto' de la curva de campana para ver si se ajustan a la normalidad.",
                 hasScale: true,
-                scale: 'p < 0.05 (No es Normal)',
+                scale: 'W cercano a 1 (Normal) | p < 0.05 (No Normal)',
                 content: {
-                    aplicacion: `<p><strong>¿Qué hicimos y por qué?</strong></p><p>Sabiendo que nuestros <a href="#" onclick="event.preventDefault(); openToolModal('ordinal_data')">datos eran ordinales</a>, ya sospechábamos que no serían 'normales'. Usamos la prueba de <strong>Shapiro-Wilk</strong> para confirmarlo formalmente. La elegimos por su alta precisión en muestras pequeñas como la de nuestro Grupo Control (n=26).</p>`,
-                    interpretacion: `<p><strong>¿Qué encontramos y qué significó?</strong></p><p>El resultado fue claro: la mayoría de nuestros datos <strong>NO eran normales</strong> (obtuvimos un <a href="#" onclick="openFormulaGuide('interpretacion')">valor p</a> < .05).</p><p>Este fue el <strong>cruce de caminos metodológico</strong> de nuestra tesis. Nos prohibió usar pruebas estándar (t-Student, ANOVA) y nos obligó a tomar la <strong>'ruta no paramétrica'</strong>, confirmando que era el camino correcto y más robusto.</p>`,
-                    conexiones: `<div class="methodology-path"><h4>Nuestra Decisión Crítica</h4><div class="path-steps"><div class="path-step current"><div class="step-number">1</div><div class="step-text"><strong>El Veredicto:</strong> La prueba de Shapiro-Wilk nos dijo que los datos no eran 'normales', confirmando lo esperado para datos ordinales.</div></div><div class="path-step"><div class="step-number">→</div><div class="step-text"><strong>La Consecuencia:</strong> Esto justificó el uso de pruebas no paramétricas como:<ul><li><a href="#" onclick="event.preventDefault(); openToolModal('mann-whitney')">Mann-Whitney</a></li><li><a href="#" onclick="event.preventDefault(); openToolModal('wilcoxon')">Wilcoxon</a></li><li><a href="#" onclick="event.preventDefault(); openToolModal('kruskal-wallis')">Kruskal-Wallis</a></li></ul></div></div></div></div>`
+                    how_it_works: `<strong>¿Cómo funciona internamente? (La Lógica)</strong><p>La prueba de Shapiro-Wilk es brillante. Compara dos cálculos de la dispersión de los datos:</p><ol><li>La <strong>dispersión "real"</strong> de tus datos, tal como son.</li><li>La <strong>dispersión "ideal"</strong> que tendrían si se ajustaran perfectamente a una curva normal.</li></ol><p>El estadístico <strong>'W'</strong> es el ratio entre ambos. Si los datos son normales, ambas dispersiones son casi idénticas y 'W' es cercano a 1. Si no lo son, 'W' se aleja de 1.</p>`,
+                    why_this_tool: `<strong>¿Por qué Shapiro-Wilk y no Kolmogorov-Smirnov?</strong><p>Elegimos Shapiro-Wilk por una razón clave: <strong>es la prueba más potente y especialista para esta tarea</strong>, especialmente en muestras de nuestro tamaño. Mientras que Kolmogorov-Smirnov es una prueba más general, Shapiro-Wilk es el "especialista" diseñado exclusivamente para detectar desviaciones de la normalidad. Dado que nuestro Grupo Control tenía un tamaño de muestra pequeño (n=26), Shapiro-Wilk era la opción metodológicamente más rigurosa y recomendada.</p>`,
+                    interpretacion: `<strong>El Cruce de Caminos Metodológico</strong><p>El resultado fue claro: la mayoría de nuestros datos <strong>NO eran normales</strong> (obtuvimos un <a href="#" onclick="openFormulaGuide('interpretacion')">valor p</a> < .05). Este hallazgo nos prohibió usar pruebas estándar (t-Student, ANOVA) y nos obligó a tomar la <strong>'ruta no paramétrica'</strong>, confirmando que era el camino correcto y más robusto para nuestra investigación.</p>`,
+                    conexiones: `<div class="methodology-path"><h4>Nuestra Decisión Crítica</h4><div class="path-steps"><div class="path-step current"><div class="step-number">1</div><div class="step-text"><strong>El Veredicto:</strong> La prueba de Shapiro-Wilk, la más potente para nuestro caso, nos dijo que los datos no eran 'normales'.</div></div><div class="path-step"><div class="step-number">→</div><div class="step-text"><strong>La Consecuencia:</strong> Esto justificó el uso de pruebas no paramétricas como:<ul><li><a href="#" onclick="event.preventDefault(); openToolModal('mann-whitney')">Mann-Whitney</a></li><li><a href="#" onclick="event.preventDefault(); openToolModal('wilcoxon')">Wilcoxon</a></li><li><a href="#" onclick="event.preventDefault(); openToolModal('kruskal-wallis')">Kruskal-Wallis</a></li></ul></div></div></div></div>`
+                }
+            },
+            'instrumento-eca': {
+                definition: "Es la Escala de Conciencia Ambiental (ECA), la herramienta central que usamos para medir el 'Saber' (Cognitiva), 'Sentir' (Afectiva) y 'Hacer' (Conductual) de los estudiantes. No la creamos desde cero, sino que la adaptamos cuidadosamente a nuestro contexto.",
+                content: {
+                    aplicacion: `
+                        <div class="instrument-path">
+                            <h4>El Camino del Instrumento: De la Fuente a la Aplicación</h4>
+                            <div class="path-steps">
+                                <div class="path-step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-text">
+                                        <strong>La Fuente:</strong> Nuestro punto de partida fue la escala ECA, un instrumento robusto y ya validado científicamente por <strong>Torres Soto et al. (2022)</strong>.
+                                    </div>
+                                </div>
+                                <div class="path-step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-text">
+                                        <strong>La Adaptación:</strong> Realizamos una traducción y adaptación cultural de la escala para asegurar que fuera 100% relevante y comprensible para los estudiantes de octavo grado en el contexto semirrural colombiano.
+                                    </div>
+                                </div>
+                                <div class="path-step current">
+                                    <div class="step-number">3</div>
+                                    <div class="step-text">
+                                        <strong>La Validación (Control de Calidad):</strong> Sometimos nuestra versión adaptada a un riguroso proceso de validación para asegurar su calidad. Este proceso incluyó:
+                                        <ul>
+                                            <li>Una <a href="#" onclick="event.preventDefault(); openToolModal('content-validity')">Revisión por Expertos</a> para garantizar la validez del contenido.</li>
+                                            <li>Un análisis de <a href="#" onclick="event.preventDefault(); openToolModal('internal-consistency')">Coherencia de Preguntas</a> para medir la fiabilidad. <strong>Resultado Clave:</strong> Este análisis reveló una excelente fiabilidad para las dimensiones Afectiva y Conductual, pero una fiabilidad inaceptablemente baja en la Cognitiva, un hallazgo crucial del estudio.</li>
+                                            <li>Una <a href="#" onclick="event.preventDefault(); openToolModal('factor-analysis')">Validación de Estructura</a> para confirmar que la escala medía correctamente las tres dimensiones teóricas.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="path-step">
+                                    <div class="step-number">4</div>
+                                    <div class="step-text">
+                                        <strong>La Aplicación:</strong> Una vez validada, utilizamos la ECA Adaptada para medir la conciencia ecológica de los estudiantes antes (pretest) y después (postest) de la intervención.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `
                 }
             },
             'internal-consistency': { 
-                definition: "Aquí verificamos si las preguntas de cada dimensión de la escala son consistentes entre sí. Es como comprobar si todos los miembros de un equipo están trabajando para el mismo objetivo.",
+                definition: "Verificamos si todas las preguntas de una misma sección de la encuesta miden consistentemente el mismo constructo. Es como evaluar la 'sintonía' de un equipo musical: aunque cada instrumento suene diferente, todos deben estar afinados y tocando la misma canción.",
                 hasScale: true,
-                scale: 'α/ω ≥ 0.70 (Aceptable)',
+                scale: 'α/ω ≥ 0.70 (Aceptable) | < 0.70 (Cuestionable)',
                 content: { 
-                    aplicacion: `<strong>¿Qué hicimos?</strong> Usamos dos coeficientes estadísticos (<a href="#" onclick="openFormulaGuide('simbologia')">Alfa de Cronbach (α) y Omega de McDonald (ω)</a>) para medir la "armonía" interna de las preguntas en cada una de las tres dimensiones de la ECA.`,
-                    interpretacion: `<strong>¿Qué encontramos?</strong> Descubrimos algo crucial. Mientras que las dimensiones <strong>Afectiva y Conductual</strong> mostraron una coherencia aceptable, la dimensión <strong>Cognitiva</strong> obtuvo una calificación muy baja (α = .387).<br><br>Esto fue un hallazgo metodológico clave: la parte de nuestra encuesta que medía el conocimiento no era fiable. Por esta razón, declaramos sus resultados como <strong>no concluyentes</strong>.`
+                    aplicacion: `<div class="application-context">
+                        <p>Después de la revisión por expertos, este fue el segundo paso clave en la validación de nuestra <a href="#" onclick="event.preventDefault(); openToolModal('instrumento-eca')">ECA Adaptada</a>. Necesitábamos comprobar si las preguntas de cada dimensión realmente medían lo mismo de forma consistente.</p>
+                    </div>
+                    <strong>¿Qué hicimos?</strong> Usamos dos coeficientes estadísticos (<a href="#" onclick="openFormulaGuide('simbologia')">Alfa de Cronbach (α) y Omega de McDonald (ω)</a>) para medir la "armonía" interna de las preguntas en cada una de las tres dimensiones de la ECA.`,
+                    why_two_measures: `<strong>Alfa (α) vs. Omega (ω): ¿Por qué dos medidas?</strong><p>Usamos ambos coeficientes por rigor metodológico:</p><ul><li><strong>Alfa de Cronbach (α):</strong> Es el indicador "clásico", útil para comparar con estudios más antiguos. Es como un director de orquesta que asume que todos los instrumentos contribuyen por igual.</li><li><strong>Omega de McDonald (ω):</strong> Es el indicador "moderno" y más preciso. Es como un director que sabe que algunos instrumentos (los ítems "estrella") lideran la melodía y les da más peso en su evaluación.</li></ul>`,
+                    interpretacion: `<strong>¿Qué encontramos?</strong><p>Descubrimos algo crucial. Mientras que las dimensiones <strong>Afectiva y Conductual</strong> mostraron una "sintonía" aceptable (cercanos a .70), la dimensión <strong>Cognitiva</strong> estaba claramente "desafinada" (α = .387).<br><br>Esto fue un hallazgo metodológico clave: la parte de nuestra encuesta que medía el conocimiento no era fiable, por lo que declaramos sus resultados como <strong>no concluyentes</strong>.</p>`
                 }
             },
             'content-validity': {
                 definition: "Este paso consiste en preguntar a expertos si las preguntas de nuestra encuesta son adecuadas y cubren todos los aspectos importantes del concepto que queremos medir.",
                 hasScale: true,
-                scale: 'I-CVI ≥ 0.78 (Aceptable)',
+                scale: 'S-CVI/Ave ≥ 0.90 (Excelente)',
                 content: {
-                    aplicacion: `<strong>¿Qué hicimos?</strong> Le pedimos a un panel de 3 expertos en educación ambiental y psicometría que actuaran como "jueces" de nuestra Escala de Conciencia Ambiental (ECA). Cada uno evaluó si las preguntas eran claras y relevantes.`,
-                    interpretacion: `<strong>¿Qué encontramos?</strong> Obtuvimos una "calificación" promedio de <strong>.883 sobre 1</strong> (I-CVI), lo cual es considerado excelente. En esencia, los expertos nos dieron su "sello de aprobación", confirmando que nuestro instrumento estaba bien diseñado.<br><br><em>(Nota: El <strong>I-CVI</strong> no es una fórmula compleja, sino el resultado de un proceso de conteo de acuerdos entre jueces, por eso no tiene una entrada dedicada en la guía de fórmulas).</em>`
+                    aplicacion: `<div class="application-context">
+                        <p>Este fue el primer paso en el control de calidad de nuestra <a href="#" onclick="event.preventDefault(); openToolModal('instrumento-eca')">ECA Adaptada</a>. Antes de usarla, necesitábamos asegurarnos de que sus preguntas fueran relevantes y claras.</p>
+                    </div>
+                    <strong>¿Cómo lo hicimos?</strong><p>Un panel de 3 expertos en educación ambiental y psicometría calificó cada una de las 21 preguntas en una escala de 1 a 4 según su relevancia y claridad.</p><p>Para cada pregunta, contamos cuántos expertos le dieron una calificación alta (3 o 4). Luego, promediamos estos resultados de todas las preguntas para obtener un índice global llamado <strong>Promedio del Índice de Validez de Contenido de la Escala (S-CVI/Ave)</strong>.</p>`,
+                    interpretacion: `<strong>¿Qué encontramos?</strong><p>Obtuvimos un <strong>S-CVI/Ave = .883</strong>. Según las guías de Polit & Beck (2006), un valor superior a .80 se considera muy bueno, y cercano a .90 es excelente. Este resultado nos dio una fuerte confianza en que nuestra encuesta, en su conjunto, medía de forma válida y representativa lo que queríamos medir.</p>`,
+                    conexiones: `<div class="application-context"><p>Para entender la matemática detrás de este proceso, puede consultar la <a href="#" onclick="openFormulaGuide('formulas')">Fórmula del I-CVI</a> y la guía sobre <a href="#" onclick="openFormulaGuide('kappa')">Kappa</a> en nuestra guía de referencia.</p></div>`
                 }
             },
             'fidelity': {
-                definition: "Mide hasta qué punto la intervención se implementó en la práctica tal y como fue diseñada en la teoría. Es un control de calidad para la intervención en sí misma.",
+                definition: "Mide si la intervención se implementó en la práctica tal como fue diseñada. Es un control de calidad que asegura que los estudiantes recibieron la 'dosis' completa de la experiencia educativa.",
                 hasScale: true,
-                scale: '≥80% de Adherencia (Aceptable)',
+                scale: '≥80% Asistencia a Sesiones',
                 content: {
-                    aplicacion: `<strong>¿Qué hicimos?</strong> Durante las 8 semanas, llevamos una bitácora detallada para registrar si cada actividad planeada se realizaba, cuánto tiempo tomaba y si había desviaciones. Nuestro objetivo era lograr al menos un 80% de fidelidad.`,
-                    interpretacion: `<strong>¿Qué encontramos?</strong> Logramos una fidelidad de implementación superior al 80%. Esto es crucial porque nos da confianza en que los efectos observados en los estudiantes se deben realmente a nuestra intervención diseñada y no a una versión improvisada o incompleta de la misma.`
+                    aplicacion: `<strong>¿Cómo lo medimos?</strong><p>Para asegurar la fidelidad, establecimos un criterio de inclusión claro: solo los estudiantes del Grupo Experimental que asistieron al <strong>80% o más de las 8 sesiones</strong> de la intervención fueron incluidos en el análisis final. También llevamos una bitácora para documentar que cada actividad se realizara según el plan.</p>`,
+                    interpretacion: `<strong>¿Por qué es crucial este criterio?</strong><p>Este control nos permite afirmar con mucha más confianza que los efectos positivos observados se deben realmente a nuestra intervención diseñada. Asegura que no estamos comparando a estudiantes que recibieron la intervención completa con otros que solo participaron esporádicamente. En resumen, garantiza que estamos midiendo el impacto de la intervención real, no de una versión incompleta de la misma.</p>`
                 }
             },
             'factor-analysis': {
@@ -370,7 +358,10 @@
                 hasScale: true,
                 scale: 'CFI/TLI > 0.90 | RMSEA < 0.08',
                 content: {
-                    aplicacion: `<strong>¿Qué hicimos?</strong> Nuestro "plano" teórico decía que la conciencia ecológica se compone de tres dimensiones: Cognitiva, Afectiva y Conductual. Usamos el AFC para comprobar si las respuestas de los 89 estudiantes realmente se agrupaban de esa manera.`,
+                    aplicacion: `<div class="application-context">
+                        <p>Esta fue la prueba de validación estructural más avanzada que aplicamos a nuestra <a href="#" onclick="event.preventDefault(); openToolModal('instrumento-eca')">ECA Adaptada</a>. El objetivo era confirmar científicamente si la estructura de tres dimensiones (Cognitiva, Afectiva, Conductual) se correspondía con los datos reales.</p>
+                    </div>
+                    <strong>¿Qué hicimos?</strong> Nuestro "plano" teórico decía que la conciencia ecológica se compone de tres dimensiones: Cognitiva, Afectiva y Conductual. Usamos el AFC para comprobar si las respuestas de los 89 estudiantes realmente se agrupaban de esa manera.`,
                     interpretacion: `<strong>¿Qué encontramos?</strong> El análisis nos dio una "calificación de ajuste" muy buena (<a href="#" onclick="openFormulaGuide('simbologia')">CFI</a>=.913 y <a href="#" onclick="openFormulaGuide('formulas')">RMSEA</a>=.037). Esto significa que la "construcción" (los datos) <strong>coincidía con nuestro "plano"</strong>, validando el enfoque central de nuestra tesis. <br><br><em>(Nota: El término <strong>DWLS</strong> se refiere al "motor" de cálculo que usamos porque nuestros datos eran <a href="#" onclick="event.preventDefault(); openToolModal('ordinal_data')">ordinales</a>, lo que hace el análisis más preciso).</em>`
                 }
             },
@@ -393,9 +384,10 @@
             'kruskal-wallis': { 
                 definition: "Esta prueba funciona como nuestro 'control de calidad'. La usamos para responder una pregunta de validez crucial: ¿las diferencias que vemos se deben a nuestra intervención, o podrían ser simplemente porque los estudiantes estaban en diferentes aulas (8° Uno, 8° Dos, 8° Tres)?", 
                 content: { 
+                    how_it_works: `<strong>¿Cómo funciona? La Lógica del Ranking</strong><p>Esta prueba no utiliza los puntajes directos, sino sus <strong>rangos</strong>. Imagina que ordenamos a todos los 89 estudiantes en una 'fila' del puntaje más bajo al más alto. La prueba luego suma los puestos de esa fila que le correspondieron a cada curso.</p><p>El estadístico <a href="#" onclick="openFormulaGuide('formulas')">H</a> simplemente comprueba si la suma de los rangos de un grupo es tan diferente a la de los otros que es improbable que sea por azar.</p>`,
                     aplicacion: `<strong>Buscando 'Variables Ocultas':</strong> La usamos para comparar los puntajes entre los tres cursos de octavo grado, tanto antes como después de la intervención.`, 
-                    interpretacion: `<strong>¿Qué encontramos?</strong> No encontramos ninguna diferencia significativa entre los cursos (todos los <a href="#" onclick="openFormulaGuide('interpretacion')">valores p</a> fueron > .36). ¡Estas fueron excelentes noticias! Significó que el efecto observado era consistente en toda la muestra y no dependía del aula específica de los estudiantes, lo que le da mucha más fuerza a nuestra conclusión de que la intervención fue la que marcó la diferencia.`,
-                    conexiones: `<div class="methodology-path"><h4>Nuestra Ruta de Análisis</h4><div class="path-steps"><div class="path-step"><div class="step-number">1</div><div class="step-text"><strong>Punto de Partida:</strong> Verificamos que los datos no eran 'normales' con <a href="#" onclick="event.preventDefault(); openToolModal('normality')">Shapiro-Wilk</a>.</div></div><div class="path-step current"><div class="step-number">2</div><div class="step-text"><strong>Decisión Clave:</strong> Al necesitar comparar tres grupos independientes con esos datos, esta era la prueba correcta.</div></div><div class="path-step"><div class="step-number">3</div><div class="step-text"><strong>Siguiente Paso (Condicional):</strong> Si hubiéramos encontrado diferencias, habríamos necesitado la <a href="#" onclick="event.preventDefault(); openToolModal('dunn')">Prueba de Dunn</a>.</div></div></div></div>`
+                    interpretacion: `<strong>¿Qué encontramos?</strong> No encontramos ninguna diferencia significativa entre los cursos (todos los <a href="#" onclick="openFormulaGuide('interpretacion')">valores p</a> fueron > .36). ¡Estas fueron excelentes noticias! Significó que el efecto observado era consistente en toda la muestra y no dependía del aula específica de los estudiantes.`,
+                    conexiones: `<div class="methodology-path"><h4>Nuestra Ruta de Análisis</h4><div class="path-steps"><div class="path-step"><div class="step-number">1</div><div class="step-text"><strong>Punto de Partida:</strong> Verificamos que los datos no eran 'normales' con <a href="#" onclick="event.preventDefault(); openToolModal('normality')">Shapiro-Wilk</a>.</div></div><div class="path-step current"><div class="step-number">2</div><div class="step-text"><strong>Decisión Clave:</strong> Al necesitar comparar <strong>tres o más grupos</strong>, esta era la prueba correcta.</div></div><div class="path-step"><div class="step-number">3</div><div class="step-text"><strong>Siguiente Paso (Condicional):</strong> Si hubiéramos encontrado diferencias, habríamos necesitado la <a href="#" onclick="event.preventDefault(); openToolModal('dunn')">Prueba de Dunn</a>.</div></div><div class="path-step"><div class="step-number">4</div><div class="step-text"><strong>Medición Final:</strong> Para medir la magnitud del efecto, usamos el <a href="#" onclick="event.preventDefault(); openToolModal('eta-squared')">Épsilon Cuadrado</a>.</div></div></div></div>`
                 } 
             },
             'dunn': { 
@@ -407,39 +399,56 @@
                 } 
             },
             'rosenthal': { 
-                definition: "Piense en esta 'r' como una regla especializada. Mientras que la 'r' más común (correlación de Pearson) mide cómo dos variables se mueven juntas, esta versión, llamada 'r de Rosenthal', tiene un trabajo muy específico: medir el **tamaño del impacto** de nuestra intervención cuando usamos pruebas no paramétricas.",
+                definition: "Esta 'r' NO es la famosa correlación de Pearson. Piense en ella como una 'regla de impacto' diseñada específicamente para medir la magnitud o importancia práctica de los resultados obtenidos en nuestras pruebas no paramétricas.",
                 hasScale: true, 
                 scale: 'r ≈ 0.1 (pequeño) | ≈ 0.3 (moderado) | ≥ 0.5 (grande)', 
                 content: { 
-                    why_this_r: `<strong>¿Por qué usamos esta 'r' específica y no otra?</strong><p>Nuestro camino metodológico nos llevó aquí. Como la <a href="#" onclick="event.preventDefault(); openToolModal('normality')">Prueba de Shapiro-Wilk</a> nos indicó que nuestros datos no eran 'normales', tuvimos que usar pruebas especiales no paramétricas (<a href="#" onclick="event.preventDefault(); openToolModal('mann-whitney')">Mann-Whitney</a> y <a href="#" onclick="event.preventDefault(); openToolModal('wilcoxon')">Wilcoxon</a>).</p><p>Esas pruebas nos dicen *si* hay una diferencia, pero no *qué tan grande* es. El 'r de Rosenthal' es el compañero perfecto para estas pruebas, ya que traduce sus resultados a una escala universal y fácil de entender de 'pequeño', 'moderado' o 'grande'.</p>`,
-                    interpretacion: `<strong>¿Cómo interpretamos los valores en el estudio?</strong><p>Esta 'r' fue clave para entender la relevancia de nuestros hallazgos:</p><ul><li>Un <strong>r = 0.59</strong> en la dimensión afectiva nos dijo que el impacto de la intervención en las actitudes fue <strong>grande</strong> y muy relevante.</li><li>Un <strong>r = 0.33</strong> en la dimensión conductual nos mostró un impacto <strong>moderado</strong>, lo que nos ayudó a visualizar la persistencia de la 'brecha actitud-conducta'.</li></ul>`,
-                    conexiones: `<div class="application-context"><p>Para ver cómo se calcula matemáticamente, puede consultar la <a href="#" onclick="openFormulaGuide('formulas')">Fórmula Clave</a> en nuestra guía de referencia.</p></div>`
+                    why_this_r: `<strong>¿Por qué esta 'r' específica (de Rosenthal)?</strong><p>La usamos porque es el estándar metodológico para nuestro diseño. Después de que pruebas como <a href="#" onclick="event.preventDefault(); openToolModal('mann-whitney')">Mann-Whitney</a> nos dicen <em>si</em> hubo una diferencia, esta 'r' nos dice <em>cuán grande e importante</em> fue esa diferencia.</p><p>Es un <strong>indicador de magnitud</strong>, no de relación. Para una explicación más detallada sobre los diferentes tipos de 'r', puede consultar nuestra <a href="#" onclick="openFormulaGuide('r-types')">Guía de Aclaración</a>.</p>`,
+                    interpretacion: `<strong>¿Cómo la usamos para interpretar los resultados?</strong><p>Esta 'r' fue clave para entender la relevancia práctica de nuestros hallazgos:</p><ul><li>Un <strong>r = 0.59</strong> en la dimensión afectiva nos dijo que el impacto de la intervención en las actitudes fue <strong>grande</strong>.</li><li>Un <strong>r = 0.27</strong> en la dimensión conductual nos mostró un impacto <strong>pequeño-moderado</strong>.</li></ul>`,
+                    conexiones: `<div class="methodology-path"><h4>Nuestra Ruta de Análisis</h4><div class="path-steps"><div class="path-step"><div class="step-number">1</div><div class="step-text"><strong>Prueba de Contraste:</strong> Ejecutamos una prueba como <a href="#" onclick="event.preventDefault(); openToolModal('mann-whitney')">Mann-Whitney</a> para ver <em>si</em> había una diferencia.</div></div><div class="path-step current"><div class="step-number">2</div><div class="step-text"><strong>Medición de Magnitud:</strong> Como la diferencia fue significativa, usamos esta medida (r) para cuantificar <em>cuán grande</em> era esa diferencia.</div></div><div class="path-step"><div class="step-number">3</div><div class="step-text"><strong>Paso de Verificación:</strong> Para mayor rigor, confirmamos esta medición con una prueba más robusta, la <a href="#" onclick="event.preventDefault(); openToolModal('cliff')">Delta de Cliff</a>.</div></div></div></div>`
                 } 
             },
             'cliff': { 
-                definition: "Piense en Delta de Cliff (δ) como una 'segunda opinión' experta y muy robusta. Su gran ventaja es que es inmune a los valores extremos (outliers) y su resultado es muy fácil de interpretar en términos de probabilidad.",
+                definition: "Piense en Delta de Cliff (δ) como nuestro 'calibrador digital' de alta precisión. Lo usamos para verificar y confirmar la medición obtenida con nuestra 'cinta métrica' principal (el r de Rosenthal).",
                 hasScale: true, 
                 scale: '|δ| ≈ 0.147 (pequeño) | ≈ 0.33 (medio) | ≥ 0.474 (grande)', 
                 content: { 
-                    why_this_tool: `<strong>¿Por qué considerar esta medida?</strong><p>Mientras que el <a href="#" onclick="event.preventDefault(); openToolModal('rosenthal')">r de Rosenthal</a> es común, Delta de Cliff es técnicamente superior para datos no normales porque no le afectan los puntajes atípicamente altos o bajos. Funciona como una 'competencia cabeza a cabeza': compara cada estudiante de un grupo con cada estudiante del otro y cuenta quién 'gana' más a menudo.</p>`,
-                    interpretacion: `<strong>¿Cómo se interpreta (y su equivalencia)?</strong><p>Su interpretación es muy intuitiva. Un <strong>δ = 0.30</strong> significa que si eliges al azar un estudiante del Grupo Experimental, tiene un <strong>30% más de probabilidad</strong> de tener un puntaje más alto que un estudiante elegido al azar del Grupo Control.</p><p>Es el análogo no paramétrico de la famosa <strong>'d de Cohen'</strong>, que se usa para datos normales.</p>`,
-                    role_in_study: `<strong>¿Qué papel jugó en nuestro estudio?</strong><p>Lo usamos como una <strong>verificación de robustez</strong> en nuestro plan de análisis. Sus resultados confirmaron la magnitud de los efectos encontrados con 'r de Rosenthal', dándonos doble confianza en nuestras conclusiones. Para mantener la simplicidad, reportamos 'r' en el texto principal, sabiendo que δ lo respaldaba.</p>`
+                    why_this_tool: `<strong>¿Qué la hace una mejor herramienta de verificación?</strong><p>Delta de Cliff es superior al 'r' en dos aspectos: es inmune a valores extremos (outliers) y su resultado es más fácil de interpretar en el mundo real. Nos dice la <strong>probabilidad</strong> de que una persona al azar del grupo con la intervención tenga un puntaje más alto que una del grupo de control.</p><p>Es el análogo no paramétrico de la famosa <strong>'d de Cohen'</strong>.</p>`,
+                    conexiones: `<div class="methodology-path"><h4>Nuestra Ruta de Análisis</h4><div class="path-steps"><div class="path-step"><div class="step-number">1</div><div class="step-text"><strong>Prueba de Contraste:</strong> Ejecutamos una prueba como <a href="#" onclick="event.preventDefault(); openToolModal('mann-whitney')">Mann-Whitney</a>.</div></div><div class="path-step"><div class="step-number">2</div><div class="step-text"><strong>Medición Principal:</strong> Cuantificamos la magnitud del efecto con el <a href="#" onclick="event.preventDefault(); openToolModal('rosenthal')">r de Rosenthal</a>.</div></div><div class="path-step current"><div class="step-number">3</div><div class="step-text"><strong>Verificación Robusta:</strong> Usamos esta medida (δ) como un "control de calidad" final para confirmar la magnitud del efecto con mayor precisión.</div></div></div></div>`
                 } 
             },
             'eta-squared': { 
-                definition: "Piense en esta medida (ε²) como la 'regla' especializada que usamos junto a la <a href='#' onclick=\"event.preventDefault(); openToolModal('kruskal-wallis')\">Prueba de Kruskal-Wallis</a>. Su único trabajo es decirnos qué tan grande fue el efecto general cuando comparamos tres o más grupos a la vez.", 
+                definition: "Es una medida que nos dice qué 'porcentaje' de las diferencias totales en los puntajes de los estudiantes se puede explicar por la pertenencia a diferentes grupos.", 
                 hasScale: true, 
                 scale: 'ε² ≈ 0.01 (pequeño) | ≈ 0.06 (moderado) | ≥ 0.14 (grande)', 
                 content: { 
-                    why_this_tool: `<strong>¿Por qué una medida diferente a 'r'?</strong><p>Porque cada prueba principal tiene su medida de tamaño del efecto compañera. Mientras que 'r' se calcula a partir del estadístico 'Z' (de Mann-Whitney/Wilcoxon), Épsilon Cuadrado (ε²) se calcula a partir del estadístico 'H' de la prueba de Kruskal-Wallis.</p><p>Usamos ε² (Épsilon) en lugar de la más común η² (Eta) porque es una versión 'corregida' y más precisa, lo que hace el resultado más honesto.</p>`,
-                    interpretacion: `<strong>¿Cómo se interpreta?</strong><p>Se interpreta como un porcentaje. Imagina que todas las diferencias en los puntajes son un 'pastel' del 100%. Un <strong>ε² = 0.216</strong> en la dimensión afectiva nos dijo que un <strong>21.6%</strong> de la variabilidad en las actitudes de los estudiantes se explicaba por la diferencia entre haber recibido la intervención o no. ¡Eso es un efecto grande y confirma lo que vimos con 'r'!</p>`,
-                    conexiones: `<div class="methodology-path"><h4>Nuestra Ruta de Análisis</h4><div class="path-steps"><div class="path-step"><div class="step-number">1</div><div class="step-text"><strong>Análisis Previo:</strong> Usamos la <a href="#" onclick="event.preventDefault(); openToolModal('kruskal-wallis')">Prueba de Kruskal-Wallis</a> para encontrar si existía una diferencia.</div></div><div class="path-step current"><div class="step-number">2</div><div class="step-text"><strong>Medición del Impacto:</strong> Al encontrar una diferencia, usamos esta medida específica para cuantificar <strong>qué tan grande</strong> era.</div></div></div></div>` 
+                    aplicacion: `<h3>¿Cómo lo usamos en el estudio?</h3><p>Esta medida fue crucial en dos momentos:</p><ol><li><strong>Para confirmar el efecto global:</strong> En la Tabla 19, la usamos para verificar el impacto de la intervención al comparar el <strong>Grupo Experimental vs. el de Control</strong>.</li><li><strong>Para el control de calidad:</strong> Su uso principal fue para analizar si había diferencias significativas entre los <strong>tres cursos (8° Uno, 8° Dos y 8° Tres)</strong>. El resultado (un efecto casi nulo) nos confirmó que el impacto de la intervención fue consistente y no dependía del aula específica de los estudiantes.</li></ol>`,
+                    interpretacion: `<h3>¿Cómo se interpreta? La Analogía del Pastel</h3><p>Un <strong>ε² = 0.216</strong> en la dimensión afectiva (Tabla 19) nos dijo que un <strong>21.6% de la variabilidad</strong> en las actitudes se explicaba por la diferencia entre haber recibido la intervención o no. ¡Un efecto grande!</p>`,
+                    why_this_tool: `<h3>Nota Metodológica: ¿Por qué ε² (Épsilon) y no η² (Eta)?</h3><div class="application-context"><p>Aunque a menudo se usa el símbolo <strong>η² (Eta Cuadrado)</strong>, tiende a sobrestimar el impacto. Nosotros calculamos y reportamos <strong>ε² (Épsilon Cuadrado)</strong> porque es una versión corregida y más precisa, ofreciendo una estimación más honesta del efecto. Fue una decisión para maximizar el rigor metodológico.</p></div>`,
+                    conexiones: `<div class="methodology-path"><h4>Nuestra Ruta de Análisis</h4><div class="path-steps"><div class="path-step"><div class="step-number">1</div><div class="step-text"><strong>Punto de Partida:</strong> Verificamos que los datos no eran 'normales' con <a href="#" onclick="event.preventDefault(); openToolModal('normality')">Shapiro-Wilk</a>.</div></div><div class="path-step"><div class="step-number">2</div><div class="step-text"><strong>Decisión Clave:</strong> Al necesitar comparar tres o más grupos, usamos la <a href="#" onclick="event.preventDefault(); openToolModal('kruskal-wallis')">Prueba de Kruskal-Wallis</a>.</div></div><div class="path-step current"><div class="step-number">3</div><div class="step-text"><strong>Medición Final:</strong> Para medir la magnitud del efecto general de Kruskal-Wallis, usamos el <strong>Épsilon Cuadrado</strong>.</div></div></div></div>`
                 } 
             },
             'formulas': { 
                 definition: 'Una guía de referencia para las principales fórmulas y notaciones estadísticas utilizadas en esta investigación.',
                 content: {
                     full_content: `
+                        <div class="accordion-item" id="accordion-descriptivos">
+                            <button class="accordion-header">Estadísticos Descriptivos</button>
+                            <div class="accordion-content">
+                                <h4>Media (Promedio)</h4>
+                                <div class="formula-container"><div class="formula" style="font-size: 1.5rem;">M = ( Σ xi ) / n</div></div>
+                                <p>Donde <code>Σ xi</code> es la suma de todos los puntajes y <code>n</code> es el número de estudiantes.</p>
+                                <br>
+                                <h4>Mediana y Rango Intercuartílico (RIQ)</h4>
+                                <p>Estas medidas no tienen una fórmula simple, son <strong>procedimentales</strong>:</p>
+                                <ol>
+                                    <li><strong>Ordenar:</strong> Se ordenan todos los puntajes de menor a mayor.</li>
+                                    <li><strong>Mediana (Q2):</strong> Es el valor que queda justo en el medio de la lista (por definición, la mediana es siempre el segundo cuartil).</li>
+                                    <li><strong>Cuartiles (Q1, Q3):</strong> Q1 es el valor medio de la primera mitad de los datos, y Q3 es el valor medio de la segunda mitad.</li>
+                                    <li><strong>RIQ:</strong> Es la diferencia entre el tercer y el primer cuartil (RIQ = Q3 - Q1).</li>
+                                </ol>
+                            </div>
+                        </div>
                         <div class="accordion-item" id="accordion-simbologia">
                             <button class="accordion-header">Simbología (Notación)</button>
                             <div class="accordion-content">
@@ -460,24 +469,71 @@
                                     <li><code>CFI / TLI</code>: Índices de ajuste comparativo. Valores > .90 son buenos.</li>
                                     <li><code>RMSEA</code>: Error de aproximación. Valores < .08 son buenos.</li>
                                 </ul>
-                                <h4>Estadísticos de Tamaño del Efecto</h4>
+                                <h4>Estadísticos de Fiabilidad y Tamaño del Efecto</h4>
                                 <ul>
-                                    <li><code>r, δ, ε²</code>: Medidas de la magnitud práctica del efecto.</li>
-                                    <li><code>α, ω</code>: Coeficientes de fiabilidad de la encuesta.</li>
+                                    <li><code>α, ω</code>: Coeficientes de fiabilidad (Alfa de Cronbach, Omega de McDonald). <strong>Para entender su diferencia conceptual, consulte la herramienta <a href="#" onclick="event.preventDefault(); openToolModal('internal-consistency')">Coherencia de Preguntas</a>.</strong></li>
+                                    <li><code>r, δ, ε², η²</code>: Medidas de la magnitud práctica del efecto.</li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="accordion-item" id="accordion-formulas">
-                            <button class="accordion-header">Fórmulas Clave</button>
+                        <div class="accordion-item" id="accordion-r-types">
+                            <button class="accordion-header">Aclaración Importante: El Símbolo 'r' en Estadística</button>
                             <div class="accordion-content">
+                                <h4>No Todas las 'r' son Iguales</h4>
+                                <p>En estadística, la letra 'r' se usa para diferentes propósitos. Es crucial distinguirlos para una correcta interpretación:</p>
+                                <ul>
+                                    <li><strong>'r' como Tamaño del Efecto (Uso en esta Tesis):</strong>
+                                        <ul>
+                                            <li><strong>Nombre:</strong> r de Rosenthal (1984).</li>
+                                            <li><strong>Propósito:</strong> Medir la <strong>magnitud o importancia</strong> de un hallazgo en pruebas no paramétricas (Mann-Whitney, Wilcoxon).</li>
+                                            <li><strong>Interpretación:</strong> Escala de pequeño a grande (0.1, 0.3, 0.5).</li>
+                                        </ul>
+                                    </li>
+                                    <br>
+                                    <li><strong>'r' como Coeficiente de Correlación (Otros Usos):</strong>
+                                        <ul>
+                                            <li><strong>Nombre:</strong> r de Pearson, r de Spearman, etc.</li>
+                                            <li><strong>Propósito:</strong> Medir el grado de relación entre dos variables (ej. a más X, más Y).</li>
+                                            <li><strong>Interpretación:</strong> Va de -1 a +1.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <div class="interpretation-guide">
+                                    <p><strong>En resumen:</strong> La 'r' utilizada en esta tesis es exclusivamente el <strong>r de Rosenthal</strong>, un indicador de impacto, y no debe confundirse con un coeficiente de correlación.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" id="accordion-formulas">
+                            <button class="accordion-header">Fórmulas Clave de Inferencia</button>
+                            <div class="accordion-content">
+                                <h4>Índice de Validez de Contenido (I-CVI)</h4>
+                                <div class="formula-container"><div class="formula" style="font-size: 1.2rem;">I-CVI = (Nº de expertos en acuerdo) / (Nº total de expertos)</div></div>
                                 <h4>r de Rosenthal</h4>
                                 <div class="formula-container"><div class="formula">r = Z / √N</div></div>
                                 <h4>Épsilon Cuadrado (para Kruskal-Wallis)</h4>
                                 <div class="formula-container"><div class="formula">ε² = (H - k + 1) / (n - k)</div></div>
+                                <h4>Fórmula de Kruskal-Wallis (Estadístico H)</h4>
+                                <div class="formula-container"><div class="formula" style="font-size: 1.4rem;">H = [ 12 / (N(N+1)) ] * [ Σ(Rᵢ²/nᵢ) ] - 3(N+1)</div><div class="formula-variables">Donde:<br><span class="variable">N</span> = Tamaño total de la muestra<br><span class="variable">k</span> = Número de grupos<br><span class="variable">Rᵢ</span> = Suma de rangos del grupo i<br><span class="variable">nᵢ</span> = Tamaño del grupo i</div></div>
                                  <h4>RMSEA (Error de Aproximación)</h4>
                                 <div class="formula-container"><div class="formula">RMSEA = √((χ² - df) / (df * (N - 1)))</div></div>
                                 <h4>Delta de Cliff (Conceptual)</h4>
                                 <div class="formula-container"><div class="formula">δ = P(X > Y) - P(Y > X)</div></div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" id="accordion-kappa">
+                            <button class="accordion-header">Ajuste por Azar (Kappa Modificado)</button>
+                            <div class="accordion-content">
+                                <h4>Propósito</h4>
+                                <p>El coeficiente Kappa (k*) es una medida más exigente que el I-CVI. Ajusta el nivel de acuerdo entre los expertos eliminando la probabilidad de que hayan coincidido simplemente por azar.</p>
+                                <h4>Fórmula</h4>
+                                <div class="formula-container"><div class="formula" style="font-size: 1.4rem;">k* = (I-CVI - Pc) / (1 - Pc)</div></div>
+                                <h4>Interpretación</h4>
+                                <ul>
+                                    <li>≥ 0.74: Excelente</li>
+                                    <li>0.60 – 0.74: Bueno</li>
+                                    <li>0.40 – 0.59: Regular</li>
+                                    <li>< 0.40: Pobre</li>
+                                </ul>
                             </div>
                         </div>
                         <div class="accordion-item" id="accordion-interpretacion">
@@ -486,12 +542,37 @@
                                 <h4>Significancia Estadística (valor p)</h4>
                                 <p>Un <strong>valor p < .05</strong> nos dice que un resultado probablemente no es producto del azar.</p>
                                 <h4>Magnitud Práctica (Tamaño del Efecto)</h4>
-                                <p>Nos dice qué tan importante es el resultado. Usamos los puntos de corte de Cohen:</p>
-                                <ul>
-                                    <li><strong>Grande:</strong> r ≥ 0.50 | |δ| ≥ 0.47 | ε² ≥ 0.14</li>
-                                    <li><strong>Moderado:</strong> r ≈ 0.30 | |δ| ≈ 0.33 | ε² ≈ 0.06</li>
-                                    <li><strong>Pequeño:</strong> r ≈ 0.10 | |δ| ≈ 0.147 | ε² ≈ 0.01</li>
-                                </ul>
+                                <p>Nos dice qué tan importante es el resultado. Usamos los puntos de corte de Cohen, presentados en la siguiente tabla para mayor claridad:</p>
+                                <table class="magnitude-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Magnitud</th>
+                                            <th>r (Rosenthal)</th>
+                                            <th>|δ| (Delta de Cliff)</th>
+                                            <th>ε² (Épsilon Cuadrado)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Pequeño</td>
+                                            <td>≈ 0.10</td>
+                                            <td>≈ 0.147</td>
+                                            <td>≈ 0.01</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Moderado</td>
+                                            <td>≈ 0.30</td>
+                                            <td>≈ 0.33</td>
+                                            <td>≈ 0.06</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Grande</td>
+                                            <td>≥ 0.50</td>
+                                            <td>≥ 0.474</td>
+                                            <td>≥ 0.14</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     `
@@ -500,198 +581,27 @@
         };
 
         const phasesData = [
-            { id: 'fase1', title: 'FASE 1: PREPARACIÓN Y SUPUESTOS', type: 'fase-1', tools: [ { name: 'Estadísticos Descriptivos', code: 'Media / Mediana', contentKey: 'descriptives' }, { name: 'Naturaleza de los Datos', code: 'Escala Ordinal', contentKey: 'ordinal_data' }, { name: 'Prueba de Normalidad', code: 'Shapiro-Wilk', contentKey: 'normality' } ] },
-            { id: 'fase2', title: 'FASE 2: VALIDACIÓN DEL ESTUDIO', type: 'fase-2', tools: [ { name: 'Revisión por Expertos', code: 'Validez Contenido', contentKey: 'content-validity' }, { name: 'Coherencia de Preguntas', code: 'Alfa / Omega', contentKey: 'internal-consistency' }, { name: 'Validación de Estructura', code: 'AFC (RMSEA, CFI)', contentKey: 'factor-analysis' }, { name: 'Fidelidad de Intervención', code: 'Adherencia ≥80%', contentKey: 'fidelity' } ] },
-            { id: 'inferencial', title: 'ANÁLISIS INFERENCIAL: PRUEBAS DE CONTRASTE', type: 'inferencial', tools: [ { name: 'Comparando Grupos: ¿Funcionó?', code: 'U de Mann-Whitney', contentKey: 'mann-whitney' }, { name: 'Midiendo el Cambio: ¿Mejoraron?', code: 'Prueba de Wilcoxon', contentKey: 'wilcoxon' }, { name: 'Control de Calidad: ¿Influyó el Curso?', code: 'Kruskal-Wallis', contentKey: 'kruskal-wallis' }, { name: 'Investigación a Fondo (si aplica)', code: 'Prueba de Dunn', contentKey: 'dunn' } ] },
-            { id: 'impacto', title: 'ANÁLISIS DE IMPACTO: TAMAÑO DEL EFECTO', type: 'impacto', tools: [ { name: 'Tamaño del Efecto (2 Grupos)', code: 'r de Rosenthal', contentKey: 'rosenthal' }, { name: 'Tamaño del Efecto (Robusto)', code: 'Delta de Cliff', contentKey: 'cliff' }, { name: 'Tamaño del Efecto (+2 Grupos)', code: 'Épsilon Cuadrado (ε²)', contentKey: 'eta-squared' } ] },
-            { id: 'apendice', title: 'GUÍA DE FÓRMULAS Y NOTACIÓN', type: 'apendice', tools: [ { name: 'Formulario y Guía de Interpretación', code: 'Fórmulas', contentKey: 'formulas' } ] }
+            { id: 'fase1', title: 'FASE 1: PREPARACIÓN Y SUPUESTOS', type: 'fase-1', tools: [ { name: 'Estadísticos Descriptivos', code: 'Media / Mediana', description: 'Resumen inicial de los datos', contentKey: 'descriptives' }, { name: 'Naturaleza de los Datos', code: 'Escala Ordinal', description: 'Tipo de datos y sus implicaciones', contentKey: 'ordinal_data' }, { name: 'Prueba de Normalidad', code: 'Shapiro-Wilk', description: 'Verificación del supuesto de normalidad', contentKey: 'normality' }, { name: 'Validación del Tamaño Muestral', code: 'Potencia a Priori', description: 'Asegura que la muestra es suficiente', contentKey: 'sample_size' }, { name: 'La Muestra del Estudio (n=89)', code: 'Muestreo y Composición', description: 'Quiénes participaron y cómo abordamos el desbalance entre los grupos.', contentKey: 'muestra_estudio' }, { name: 'Fidelidad de Intervención', code: 'Adherencia ≥80%', description: 'Asegura la validez de la intervención, un pilar del diseño del estudio.', contentKey: 'fidelity' } ] },
+            { id: 'fase2', title: 'FASE 2: VALIDACIÓN DEL INSTRUMENTO', type: 'fase-2', tools: [ { name: 'El Instrumento de Medición (ECA Adaptada)', code: 'ECA (Torres et al., 2022)', description: 'La historia y el proceso de validación de nuestra herramienta de medición.', contentKey: 'instrumento-eca' }, { name: 'Revisión por Expertos (Validez de Contenido)', code: 'Índice I-CVI', description: 'Asegura que las preguntas son correctas', contentKey: 'content-validity' }, { name: 'Coherencia de Preguntas', code: 'Alfa / Omega', description: 'Mide si las preguntas de una sección están sintonizadas', contentKey: 'internal-consistency' }, { name: 'Validación de Estructura', code: 'AFC (RMSEA, CFI)', description: 'Confirma que el modelo de 3 dimensiones es correcto', contentKey: 'factor-analysis' } ] },
+            { id: 'inferencial', title: 'ANÁLISIS INFERENCIAL: PRUEBAS DE CONTRASTE', type: 'inferencial', tools: [ { name: 'Comparando Grupos: ¿Funcionó?', code: 'U de Mann-Whitney', description: 'Compara Grupo Experimental vs. Control al final', contentKey: 'mann-whitney' }, { name: 'Midiendo el Cambio: ¿Mejoraron?', code: 'Prueba de Wilcoxon', description: 'Compara el antes y después en el mismo grupo', contentKey: 'wilcoxon' }, { name: 'Control de Calidad: ¿Influyó el Curso?', code: 'Kruskal-Wallis', description: 'Verifica si hubo diferencias entre los salones de clase', contentKey: 'kruskal-wallis' }, { name: 'Investigación a Fondo (si aplica)', code: 'Prueba de Dunn', description: 'Identifica qué grupos específicos difieren', contentKey: 'dunn' } ] },
+            { id: 'impacto', title: 'ANÁLISIS DE IMPACTO: TAMAÑO DEL EFECTO', type: 'impacto', tools: [ { name: 'Tamaño del Efecto para Dos Grupos (r)', code: 'r de Rosenthal', description: 'Nuestra "regla" principal para medir qué tan grande fue el impacto al comparar los dos grupos principales del estudio: el Experimental vs. el de Control.', contentKey: 'rosenthal' }, { name: 'Verificación Robusta del Efecto (δ)', code: 'Delta de Cliff', description: 'Una medida alternativa y más precisa que usamos para confirmar la magnitud del efecto entre el Grupo Experimental y el de Control.', contentKey: 'cliff' }, { name: 'Tamaño del Efecto para Múltiples Grupos (ε²)', code: 'Épsilon Cuadrado', description: 'La medida del efecto que usamos para Kruskal-Wallis. Es la versión corregida del conocido eta cuadrado (η²).', contentKey: 'eta-squared' } ] },
+            { id: 'apendice', title: 'GUÍA DE FÓRMULAS Y NOTACIÓN', type: 'apendice', tools: [ { name: 'Formulario y Guía de Interpretación', code: 'Fórmulas', description: 'Referencia rápida de la simbología y matemática', contentKey: 'formulas' } ] }
         ];
         
         // El resto del script
-        
-        let currentToolIndex = 0;
-        let allTools = [];
-        let filteredTools = [];
-
-        const phasesContainer = document.getElementById('phasesContainer');
-        const toolModal = document.getElementById('toolModal');
-        const modalToolTitle = document.getElementById('modalToolTitle');
-        const modalToolDefinition = document.getElementById('modalToolDefinition');
-        const modalHeaderBadges = document.getElementById('modalHeaderBadges');
-        const modalToolBody = document.getElementById('modalToolBody');
-        const closeModal = document.getElementById('closeModal');
-        const toolSearch = document.getElementById('toolSearch');
-        const noResults = document.getElementById('noResults');
-
-        function renderPhaseCards(filter = '') {
-            phasesContainer.innerHTML = '';
-            let hasResults = false;
-            
-            phasesData.forEach(phase => {
-                const filteredToolsInPhase = phase.tools.filter(tool => 
-                    tool.name.toLowerCase().includes(filter) || 
-                    tool.code.toLowerCase().includes(filter)
-                );
-
-                if (filteredToolsInPhase.length > 0) {
-                    hasResults = true;
-                    const card = document.createElement('div');
-                    card.className = `phase-card ${phase.type}`;
-                    
-                    let toolsHTML = '<ul class="tools-list">';
-                    filteredToolsInPhase.forEach(tool => {
-                        toolsHTML += `
-                            <li onclick="openToolModal('${tool.contentKey}')">
-                                <span class="tool-badge">${tool.code}</span>
-                                <span>${tool.name}</span>
-                            </li>
-                        `;
-                    });
-                    toolsHTML += '</ul>';
-                    
-                    card.innerHTML = `<h3>${phase.title}</h3>${toolsHTML}`;
-                    phasesContainer.appendChild(card);
-                }
-            });
-            
-            allTools = phasesData.flatMap(phase => phase.tools);
-            filteredTools = allTools.filter(tool => 
-                tool.name.toLowerCase().includes(filter) || 
-                tool.code.toLowerCase().includes(filter)
-            );
-
-            noResults.style.display = hasResults ? 'none' : 'block';
-        }
-
-        function openToolModal(contentKey) {
-            toolModal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-            
-            const toolContent = studyContent[contentKey];
-            const phaseTool = allTools.find(t => t.contentKey === contentKey);
-            
-            modalToolTitle.textContent = phaseTool.name;
-            modalToolDefinition.innerHTML = toolContent.definition;
-            
-            currentToolIndex = filteredTools.findIndex(t => t.contentKey === contentKey);
-            
-            let headerBadgesHTML = `<span class="modal-tool-code">${phaseTool.code}</span>`;
-            if (toolContent.hasScale) {
-                headerBadgesHTML += `<span class="modal-scale">${toolContent.scale}</span>`;
-            }
-            modalHeaderBadges.innerHTML = headerBadgesHTML;
-            
-            let modalContent = '';
-
-            if (contentKey === 'formulas') {
-                modalContent = toolContent.content.full_content;
-            } else {
-                 for (const [key, value] of Object.entries(toolContent.content)) {
-                    let sectionTitle = '';
-                    let className = 'application-context';
-                    let contentHTML = `<div>${value}</div>`;
-
-                    switch (key) {
-                        case 'aplicacion': sectionTitle = 'Aplicación en Nuestro Estudio'; break;
-                        case 'why_this_r': sectionTitle = '¿Por qué esta "r" y no otra?'; className = 'interpretation-guide'; break;
-                        case 'why_this_tool': sectionTitle = '¿Por qué esta herramienta específica?'; className = 'interpretation-guide'; break;
-                        case 'role_in_study': sectionTitle = '¿Qué papel jugó en nuestro estudio?'; break;
-                        case 'consideraciones': sectionTitle = 'Consideraciones Metodológicas'; className = 'interpretation-guide'; break;
-                        case 'interpretacion': sectionTitle = 'Interpretación de Nuestros Resultados'; break;
-                        case 'conexiones': modalContent += value; continue;
-                        default: continue;
-                    }
-                    modalContent += `<div class="info-section"><h3>${sectionTitle}</h3><div class="${className}">${contentHTML}</div></div>`;
-                }
-            }
-            
-            modalContent += `<div class="modal-navigation">
-                <button id="prevTool" class="nav-btn" ${currentToolIndex <= 0 ? 'disabled' : ''}>← Anterior</button>
-                <button id="nextTool" class="nav-btn" ${currentToolIndex >= filteredTools.length - 1 ? 'disabled' : ''}>Siguiente →</button>
-            </div>`;
-            
-            modalToolBody.innerHTML = modalContent;
-
-            if (contentKey === 'formulas') {
-                activateAccordion();
-            }
-            
-            document.getElementById('prevTool')?.addEventListener('click', navigateToPrevTool);
-            document.getElementById('nextTool')?.addEventListener('click', navigateToNextTool);
-            
-            closeModal.focus();
-        }
-
-        function activateAccordion() {
-            const accordionHeaders = document.querySelectorAll('.accordion-header');
-            accordionHeaders.forEach(header => {
-                header.addEventListener('click', () => {
-                    const currentlyActive = document.querySelector('.accordion-header.active');
-                    if(currentlyActive && currentlyActive !== header) {
-                        currentlyActive.classList.remove('active');
-                        currentlyActive.nextElementSibling.style.maxHeight = null;
-                        currentlyActive.nextElementSibling.style.padding = "0 20px";
-                    }
-
-                    header.classList.toggle('active');
-                    const content = header.nextElementSibling;
-                    if (content.style.maxHeight) {
-                        content.style.maxHeight = null;
-                        content.style.padding = "0 20px";
-                    } else {
-                        content.style.maxHeight = content.scrollHeight + 40 + "px";
-                        content.style.padding = "20px";
-                    }
-                });
-            });
-        }
-
-        function openFormulaGuide(sectionId) {
-            openToolModal('formulas');
-            setTimeout(() => {
-                const accordionItem = document.getElementById(`accordion-${sectionId}`);
-                if (accordionItem) {
-                    const header = accordionItem.querySelector('.accordion-header');
-                    if (header && !header.classList.contains('active')) {
-                        header.click();
-                    }
-                    accordionItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }, 150); 
-        }
-
+        let currentToolIndex = 0; let allTools = []; let filteredTools = [];
+        const phasesContainer = document.getElementById('phasesContainer'); const toolModal = document.getElementById('toolModal'); const modalToolTitle = document.getElementById('modalToolTitle'); const modalToolDefinition = document.getElementById('modalToolDefinition'); const modalHeaderBadges = document.getElementById('modalHeaderBadges'); const modalToolBody = document.getElementById('modalToolBody'); const closeModal = document.getElementById('closeModal'); const toolSearch = document.getElementById('toolSearch'); const noResults = document.getElementById('noResults');
+        function renderPhaseCards(filter = '') { const lowerCaseFilter = filter.toLowerCase(); phasesContainer.innerHTML = ''; let hasResults = false; const highlight = (text, filter) => { if (!filter) return text; return text.replace(new RegExp(filter, 'gi'), `<span class="highlight">$&</span>`); }; phasesData.forEach(phase => { const filteredToolsInPhase = phase.tools.filter(tool => tool.name.toLowerCase().includes(lowerCaseFilter) || tool.code.toLowerCase().includes(lowerCaseFilter) || tool.description.toLowerCase().includes(lowerCaseFilter)); if (filteredToolsInPhase.length > 0) { hasResults = true; const card = document.createElement('div'); card.className = `phase-card ${phase.type}`; let toolsHTML = '<ul class="tools-list">'; filteredToolsInPhase.forEach(tool => { toolsHTML += `<li onclick="openToolModal('${tool.contentKey}')"><span class="tool-badge">${highlight(tool.code, lowerCaseFilter)}</span><div class="tool-text-container"><strong>${highlight(tool.name, lowerCaseFilter)}</strong><small>${highlight(tool.description, lowerCaseFilter)}</small></div></li>`; }); toolsHTML += '</ul>'; card.innerHTML = `<h3>${phase.title}</h3>${toolsHTML}`; phasesContainer.appendChild(card); } }); allTools = phasesData.flatMap(phase => phase.tools); filteredTools = allTools.filter(tool => tool.name.toLowerCase().includes(lowerCaseFilter) || tool.code.toLowerCase().includes(lowerCaseFilter) || tool.description.toLowerCase().includes(lowerCaseFilter)); noResults.style.display = hasResults ? 'none' : 'block'; }
+        function openToolModal(contentKey) { toolModal.style.display = 'block'; document.body.style.overflow = 'hidden'; const toolContent = studyContent[contentKey]; const phaseTool = allTools.find(t => t.contentKey === contentKey); modalToolTitle.textContent = phaseTool.name; modalToolDefinition.innerHTML = toolContent.definition; currentToolIndex = filteredTools.findIndex(t => t.contentKey === contentKey); let headerBadgesHTML = `<span class="modal-tool-code">${phaseTool.code}</span>`; if (toolContent.hasScale) { headerBadgesHTML += `<span class="modal-scale">${toolContent.scale}</span>`; } modalHeaderBadges.innerHTML = headerBadgesHTML; let modalContent = ''; if (contentKey === 'formulas') { modalContent = toolContent.content.full_content; } else { let mainContent = ''; let connectionsContent = ''; for (const [key, value] of Object.entries(toolContent.content)) { if (key === 'conexiones') { connectionsContent = value; continue; } let sectionTitle = ''; let className = 'application-context'; let contentHTML = `<div>${value}</div>`; switch (key) { case 'aplicacion': sectionTitle = 'Aplicación en Nuestro Estudio'; break; case 'how_it_works': sectionTitle = '¿Cómo Funciona? (La Lógica)'; className = 'interpretation-guide'; break; case 'why_this_r': sectionTitle = '¿Por qué esta "r" y no otra?'; className = 'interpretation-guide'; break; case 'why_this_tool': sectionTitle = '¿Por qué esta herramienta específica?'; className = 'interpretation-guide'; break; case 'why_two_measures': sectionTitle = 'Alfa (α) vs. Omega (ω): ¿Por qué dos medidas?'; className = 'interpretation-guide'; break; case 'composicion': sectionTitle = '¿Quiénes Participaron?'; break; case 'explicacion_desbalance': sectionTitle = 'El Desbalance y los Grupos No Equivalentes'; className = 'interpretation-guide'; break; case 'implicaciones': sectionTitle = 'La Solución Metodológica: ¿Cómo Mitigamos los Riesgos?'; break; case 'interpretacion': sectionTitle = 'Interpretación de Nuestros Resultados'; break; case 'the_main_question': sectionTitle = 'La Pregunta Principal: Potencia Estadística'; break; case 'secondary_analysis': sectionTitle = 'Nota sobre la Representatividad'; className = 'interpretation-guide'; break; default: continue; } mainContent += `<div class="info-section"><h3>${sectionTitle}</h3><div class="${className}">${contentHTML}</div></div>`; } modalContent = mainContent + connectionsContent; } modalContent += `<div class="modal-navigation"><button id="prevTool" class="nav-btn" ${currentToolIndex <= 0 ? 'disabled' : ''}>← Anterior</button><button id="nextTool" class="nav-btn" ${currentToolIndex >= filteredTools.length - 1 ? 'disabled' : ''}>Siguiente →</button></div>`; modalToolBody.innerHTML = modalContent; if (contentKey === 'formulas') { activateAccordion(); } document.getElementById('prevTool')?.addEventListener('click', navigateToPrevTool); document.getElementById('nextTool')?.addEventListener('click', navigateToNextTool); closeModal.focus(); }
+        function activateAccordion() { const accordionHeaders = document.querySelectorAll('.accordion-header'); accordionHeaders.forEach(header => { header.addEventListener('click', () => { const currentlyActive = document.querySelector('.accordion-header.active'); if(currentlyActive && currentlyActive !== header) { currentlyActive.classList.remove('active'); currentlyActive.nextElementSibling.style.maxHeight = null; currentlyActive.nextElementSibling.style.padding = "0 20px"; } header.classList.toggle('active'); const content = header.nextElementSibling; if (content.style.maxHeight) { content.style.maxHeight = null; content.style.padding = "0 20px"; } else { content.style.maxHeight = content.scrollHeight + 40 + "px"; content.style.padding = "20px"; } }); }); }
+        function openFormulaGuide(sectionId) { openToolModal('formulas'); setTimeout(() => { const accordionItem = document.getElementById(`accordion-${sectionId}`); if (accordionItem) { const header = accordionItem.querySelector('.accordion-header'); if (header && !header.classList.contains('active')) { header.click(); } accordionItem.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }, 150); }
         function navigateToPrevTool() { if (currentToolIndex > 0) { openToolModal(filteredTools[currentToolIndex - 1].contentKey); } }
         function navigateToNextTool() { if (currentToolIndex < filteredTools.length - 1) { openToolModal(filteredTools[currentToolIndex + 1].contentKey); } }
         function closeToolModal() { toolModal.style.display = 'none'; document.body.style.overflow = 'auto'; }
-        
-        closeModal.addEventListener('click', closeToolModal);
-        toolModal.addEventListener('click', e => { if (e.target === toolModal) closeToolModal(); });
-        toolSearch.addEventListener('input', e => renderPhaseCards(e.target.value.toLowerCase()));
-        
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape' && toolModal.style.display === 'block') closeToolModal();
-            if (toolModal.style.display === 'block') {
-                if (e.key === 'ArrowLeft') navigateToPrevTool();
-                if (e.key === 'ArrowRight') navigateToNextTool();
-            }
-        });
-
-        window.openToolModal = openToolModal;
-        window.openFormulaGuide = openFormulaGuide;
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            renderPhaseCards();
-            
-            // Script "Receptor" para enlaces contextuales
-            const params = new URLSearchParams(window.location.search);
-            const toolToOpen = params.get('tool');
-            if (toolToOpen && studyContent[toolToOpen]) {
-                // Pequeño delay para asegurar que todo está renderizado
-                setTimeout(() => {
-                    openToolModal(toolToOpen);
-                }, 100);
-            }
-        });
+        closeModal.addEventListener('click', closeToolModal); toolModal.addEventListener('click', e => { if (e.target === toolModal) closeToolModal(); }); toolSearch.addEventListener('input', e => renderPhaseCards(e.target.value));
+        document.addEventListener('keydown', e => { if (e.key === 'Escape' && toolModal.style.display === 'block') closeToolModal(); if (toolModal.style.display === 'block') { if (e.key === 'ArrowLeft') navigateToPrevTool(); if (e.key === 'ArrowRight') navigateToNextTool(); } });
+        window.openToolModal = openToolModal; window.openFormulaGuide = openFormulaGuide;
+        document.addEventListener('DOMContentLoaded', () => { renderPhaseCards(); const params = new URLSearchParams(window.location.search); const toolToOpen = params.get('tool'); if (toolToOpen && studyContent[toolToOpen]) { setTimeout(() => { openToolModal(toolToOpen); }, 100); } });
     </script>
 </body>
 </html>
