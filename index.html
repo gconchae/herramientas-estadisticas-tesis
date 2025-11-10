@@ -271,12 +271,13 @@
                                     <td>Prueba t Pareada</td>
                                 </tr>
                                 <tr>
-                                    <td>Análisis entre los diferentes cursos (los 3 octavos)</td>
+                                    <td>Análisis entre los diferentes cursos <em>(los 3 octavos)</em></td>
                                     <td><strong>Prueba de Kruskal-Wallis</strong></td>
                                     <td>ANOVA</td>
                                 </tr>
                                 <tr>
-                                    <td>Medir la magnitud del resultado</td>
+                                    <td>Medir la magnitud del resultado<br>
+                                    <em><small><em>(¿Fue un cambio pequeño, mediano o grande?)</em></small></td>
                                     <td><strong>r de Rosenthal, Delta de Cliff, ε²</strong></td>
                                     <td>d de Cohen, Eta Cuadrado (η²)</td>
                                 </tr>
@@ -305,7 +306,7 @@
                         <ol>
                             <li>
                                 <strong>Muestreo con Grupos-Clase Naturales:</strong>
-                                <p>Para no alterar la dinámica escolar, usamos los cursos ya existentes. La matrícula inicial (la población accesible, N=146) ya presentaba un ligero desbalance:</p>
+                                <p>Para no alterar la dinámica escolar, trabajamos con los cursos ya existentes de la <strong>cohorte de octavo grado del año escolar 2025</strong>. La matrícula inicial (la población accesible, N=146) ya presentaba un ligero desbalance:</p>
                                 <ul>
                                     <li>8° Uno: 49 estudiantes</li>
                                     <li>8° Dos: 46 estudiantes</li>
@@ -319,8 +320,10 @@
                                     <li>El curso <strong>8° Tres</strong> tuvo la tasa de atrición más alta, perdiendo al <strong>63%</strong> de sus estudiantes.</li>
                                     <li>En contraste, los otros dos cursos tuvieron tasas mucho menores (<strong>~33%</strong> y <strong>~20%</strong>).</li>
                                 </ul>
-                                <p><strong>Conclusión Clave:</strong> Fue esta <strong>atrición diferencial</strong>, y no el ligero desbalance inicial, la causa principal de la composición final de la muestra (n=89) y del riesgo de sesgo de selección.</p>
+                                <p><strong>Hecho Clave:</strong> Los tres cursos de origen (8° Uno, 8° Dos y 8° Tres) <strong>aportaron estudiantes a ambas condiciones</strong> (tanto al grupo experimental como al de control), como se detalla en la Tabla 13 de la tesis.</p>
+                                <p><strong>Conclusión:</strong> Fue esta <strong>atrición diferencial</strong>, y no el ligero desbalance inicial, la causa principal de la composición final de la muestra (n=89) y del riesgo de sesgo de selección.</p>
                             </li>
+                            
                         </ol>
                     </div>`,
                     implicaciones: `<div class="application-context"><p>Tener conciencia de este desbalance fue crucial y guió nuestras decisiones analíticas:</p><ul><li><strong>Justificó aún más el uso de pruebas no paramétricas:</strong> Pruebas como la <a href="#" onclick="event.preventDefault(); openToolModal('mann-whitney')">U de Mann-Whitney</a> son robustas y funcionan bien con grupos de tamaños desiguales y distribuciones no normales.</li><li><strong>Reforzó la importancia del análisis de potencia:</strong> Nuestro <a href="#" onclick="event.preventDefault(); openToolModal('sample_size')">cálculo de potencia a priori</a> demostró que nuestra muestra total (n=89) era más que suficiente para detectar efectos, incluso con este desbalance.</li></ul><p>En resumen, aunque el desbalance es una limitación del diseño cuasiexperimental, lo abordamos de frente con las herramientas estadísticas adecuadas para garantizar la validez de nuestras conclusiones.</p></div>`
