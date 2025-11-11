@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 700" width="1040" height="700" font-family="Arial, sans-serif" font-size="14">
+  <!-- Fondo y Estilos -->
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#333"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1040" height="700" rx="15" fill="#f8f9fa"/>
+
+  <!-- Título y Subtítulo -->
+  <text x="520" y="50" text-anchor="middle" font-size="24" font-weight="bold">Figura 3. Árbol de Decisión para la Elección de Pruebas Estadísticas</text>
+  <text x="520" y="75" text-anchor="middle" font-size="15" fill="#555">Protocolo de análisis diseñado antes de la recolección de datos para garantizar la objetividad.</text>
+
+  <!-- Nodo Raíz -->
+  <rect x="395" y="110" width="250" height="50" rx="8" fill="#f4f6f7" stroke="#7f8c8d" stroke-width="1.5"/>
+  <text x="520" y="132" text-anchor="middle" font-weight="bold">1. Nivel de Medición y Supuestos</text>
+  <text x="520" y="150" text-anchor="middle" font-size="12">(Verificación post-recolección)</text>
+
+  <!-- Líneas a las ramas principales -->
+  <line x1="520" y1="160" x2="295" y2="200" stroke="#333" marker-end="url(#arrow)"/>
+  <line x1="520" y1="160" x2="745" y2="200" stroke="#333" marker-end="url(#arrow)"/>
+
+  <!-- RAMA IZQUIERDA: NO PARAMÉTRICA -->
+  <g id="non-parametric-branch">
+    <rect x="70" y="200" width="450" height="50" rx="8" fill="#e8f4fc" stroke="#3498db" stroke-width="1.5"/>
+    <text x="295" y="222" text-anchor="middle" font-weight="bold" fill="#2980b9">Datos Ordinales o Supuestos Incumplidos</text>
+    <text x="295" y="240" text-anchor="middle" font-size="12" fill="#2980b9">(Shapiro-Wilk &lt; .05 / Levene ns)</text>
+    
+    <text x="295" y="280" text-anchor="middle" font-weight="bold" font-size="14">2. Usar Pruebas NO PARAMÉTRICAS</text>
+
+    <!-- Conectores a sub-cajas -->
+    <line x1="295" y1="290" x2="155" y2="320" stroke="#333" marker-end="url(#arrow)"/>
+    <line x1="295" y1="290" x2="295" y2="320" stroke="#333" marker-end="url(#arrow)"/>
+    <line x1="295" y1="290" x2="435" y2="320" stroke="#333" marker-end="url(#arrow)"/>
+
+    <!-- Cajas de Pruebas (DISEÑO FINAL) -->
+    <rect x="95" y="320" width="120" height="75" rx="6" fill="#fdfefe" stroke="#3498db"/>
+    <text x="155" y="340" text-anchor="middle" font-weight="bold" font-size="13">Comparación</text>
+    <text x="155" y="355" text-anchor="middle" font-weight="bold" font-size="13">Intragrupo</text>
+    <text x="155" y="372" text-anchor="middle" font-size="12">(pre vs. post)</text>
+    <text x="155" y="410" text-anchor="middle" font-weight="bold" fill="#2980b9" font-size="18">Wilcoxon</text>
+
+    <rect x="235" y="320" width="120" height="75" rx="6" fill="#fdfefe" stroke="#3498db"/>
+    <text x="295" y="340" text-anchor="middle" font-weight="bold" font-size="13">Comparación</text>
+    <text x="295" y="355" text-anchor="middle" font-weight="bold" font-size="13">Intergrupo</text>
+    <text x="295" y="372" text-anchor="middle" font-size="12">(GE vs. GC)</text>
+    <text x="295" y="405" text-anchor="middle" font-weight="bold" fill="#2980b9" font-size="18">U de Mann-</text>
+    <text x="295" y="423" text-anchor="middle" font-weight="bold" fill="#2980b9" font-size="18">Whitney</text>
+    
+    <rect x="375" y="320" width="120" height="75" rx="6" fill="#fdfefe" stroke="#3498db"/>
+    <text x="435" y="340" text-anchor="middle" font-weight="bold" font-size="13">Comparación</text>
+    <text x="435" y="355" text-anchor="middle" font-weight="bold" font-size="13">por Curso</text>
+    <text x="435" y="372" text-anchor="middle" font-size="12">(k ≥ 3 grupos)</text>
+    <text x="435" y="405" text-anchor="middle" font-weight="bold" fill="#2980b9" font-size="18">Kruskal-</text>
+    <text x="435" y="423" text-anchor="middle" font-weight="bold" fill="#2980b9" font-size="18">Wallis H</text>
+  </g>
+
+  <!-- RAMA DERECHA: PARAMÉTRICA -->
+  <g id="parametric-branch">
+    <rect x="520" y="200" width="450" height="50" rx="8" fill="#e8f9f3" stroke="#27ae60" stroke-width="1.5"/>
+    <text x="745" y="222" text-anchor="middle" font-weight="bold" fill="#218d53">Datos de Intervalo y Supuestos Cumplidos</text>
+    <text x="745" y="240" text-anchor="middle" font-size="12" fill="#218d53">(Shapiro-Wilk > .05 / Levene ok)</text>
+
+    <text x="745" y="280" text-anchor="middle" font-weight="bold" font-size="14">2. Usar Pruebas PARAMÉTRICAS</text>
+    
+    <!-- Conectores a sub-cajas -->
+    <line x1="745" y1="290" x2="605" y2="320" stroke="#333" marker-end="url(#arrow)"/>
+    <line x1="745" y1="290" x2="745" y2="320" stroke="#333" marker-end="url(#arrow)"/>
+    <line x1="745" y1="290" x2="885" y2="320" stroke="#333" marker-end="url(#arrow)"/>
+
+    <!-- Cajas de Pruebas (DISEÑO FINAL) -->
+    <rect x="545" y="320" width="120" height="75" rx="6" fill="#fdfefe" stroke="#27ae60"/>
+    <text x="605" y="340" text-anchor="middle" font-weight="bold" font-size="13">Comparación</text>
+    <text x="605" y="355" text-anchor="middle" font-weight="bold" font-size="13">Intragrupo</text>
+    <text x="605" y="372" text-anchor="middle" font-size="12">(pre vs. post)</text>
+    <text x="605" y="410" text-anchor="middle" font-weight="bold" fill="#218d53" font-size="18">t pareada</text>
+
+    <rect x="685" y="320" width="120" height="75" rx="6" fill="#fdfefe" stroke="#27ae60"/>
+    <text x="745" y="340" text-anchor="middle" font-weight="bold" font-size="13">Comparación</text>
+    <text x="745" y="355" text-anchor="middle" font-weight="bold" font-size="13">Intergrupo</text>
+    <text x="745" y="372" text-anchor="middle" font-size="12">(GE vs. GC)</text>
+    <text x="745" y="410" text-anchor="middle" font-weight="bold" fill="#218d53" font-size="18">t independiente</text>
+    
+    <rect x="825" y="320" width="120" height="75" rx="6" fill="#fdfefe" stroke="#27ae60"/>
+    <text x="885" y="340" text-anchor="middle" font-weight="bold" font-size="13">Comparación</text>
+    <text x="885" y="355" text-anchor="middle" font-weight="bold" font-size="13">Múltiple</text>
+    <text x="885" y="372" text-anchor="middle" font-size="12">(k ≥ 3 grupos)</text>
+    <text x="885" y="410" text-anchor="middle" font-weight="bold" fill="#218d53" font-size="18">ANOVA</text>
+  </g>
+
+  <!-- Nodo Unificado: Tamaños del Efecto -->
+  <rect x="170" y="450" width="700" height="95" rx="8" fill="#f9f9f9" stroke="#7f8c8d" stroke-dasharray="4,2"/>
+  <text x="520" y="475" text-anchor="middle" font-weight="bold">3. Calcular Tamaños del Efecto e IC 95%</text>
+  <text x="520" y="495" text-anchor="middle" font-size="13">Wilcoxon / U Mann-Whitney: <tspan font-family="monospace">r = |Z|/√N</tspan> (IC por bootstrap)</text>
+  <text x="520" y="510" text-anchor="middle" font-size="13">Alternativa robusta para U: <tspan font-family="monospace">δ de Cliff</tspan> (IC por bootstrap)</text>
+  <text x="520" y="525" text-anchor="middle" font-size="13">Kruskal-Wallis: <tspan font-family="monospace">ε² = (H − k + 1)/(n − k)</tspan></text>
+  
+  <!-- Nodo Final: Reporte -->
+  <rect x="170" y="565" width="700" height="70" rx="8" fill="#ecf0f1" stroke="#2c3e50" stroke-width="1.5"/>
+  <text x="520" y="590" text-anchor="middle" font-weight="bold">4. Reporte según Normas APA 7</text>
+  <text x="520" y="610" text-anchor="middle" font-size="13">Informar estadístico de prueba (e.g., U, W, H), valor p, tamaño de efecto con IC 95%.</text>
+  <text x="520" y="625" text-anchor="middle" font-size="13">Reportar descriptivos apropiados (Mediana e IQR para datos no paramétricos).</text>
+
+  <!-- Nota al pie -->
+  <text x="520" y="665" text-anchor="middle" font-size="12" fill="#7f8c8d">
+    Nota: La decisión entre pruebas paramétricas y no paramétricas depende del cumplimiento de supuestos de normalidad (Shapiro-Wilk) y homocedasticidad (Levene).
+  </text>
+</svg>
